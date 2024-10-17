@@ -1,0 +1,21 @@
+
+.searchbar{
+    
+        background-color:var(--backgroundColor);
+        width:var(--widthValue);
+        height:var(--heightValue);
+        border:var(--borderValue);
+        border-radius:var(--borderRadiusValue);
+        display:flex;
+        align-items: center;
+
+    
+}
+input{
+   height:90%;
+   font-size:var(--fontSize);
+   background-color: inherit;
+   border:none;
+   outline:none;
+   width:auto;
+}
