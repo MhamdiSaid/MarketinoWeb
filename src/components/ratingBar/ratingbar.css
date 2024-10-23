@@ -1,0 +1,14 @@
+.rating-Bar{
+    display:flex;
+    align-items: center;
+    width:var(--widthRatingBar);
+
+}
+.rating-Bar>div{
+    width:20%;
+}
+.rating-Bar>div>svg{
+    object-fit: contain;
+    width:100%;
+    height:100%;
+}

@@ -1,10 +1,10 @@
-import SearchBar from "./components/searchbar/searchbar.tsx"
+import ProductCard from "./components/productCard/productCard.tsx"
 function App() {
   
 
   return (
     <>
-      <SearchBar widthValue={20}></SearchBar>
+     <ProductCard width={30}/>
         
     </>
   )
