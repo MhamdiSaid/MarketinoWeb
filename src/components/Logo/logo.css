@@ -1,0 +1,12 @@
+.Store-logo>img{
+    object-fit: cover;
+    width:100%;
+    height:100%;
+}
+.Store-logo{
+    width:var(--mywidth);
+    height:var(--myheight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,5 +1,5 @@
 import './ShoppingCart.css';
-export function ShoppingCart({baseColor,textColor,priceColor}:{baseColor:string,textColor:string,priceColor:string}){
+export default function ShoppingCart({baseColor,textColor,priceColor}:{baseColor:string,textColor:string,priceColor:string}){
 
     let variables={"--baseColor":baseColor,"--textColor":textColor,"--priceColor":priceColor};
 

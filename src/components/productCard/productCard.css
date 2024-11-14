@@ -1,14 +1,32 @@
 .product-card{
-    width:30em;
+    width:25em;
+    max-height:30em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: aquamarine;
+    background-color: rgb(139 147 148);
+    padding:0.4em;
+    border-radius:1em;
+    position: relative;
+    padding-bottom: 2em;
 
 }
-.product-card>.prodcut-img{
-    width:90%;
-    height:60%;
+.product-card>.product-img{
+    width:24em;
+    height:16em;
+    border-radius: 1em;
+    overflow: hidden;
+    margin-top:0.5em;
+    border:0.3em solid rgb(0, 0, 0)
+
+}
+
+.product-desc>p{
+    word-break: break-all;
+    font-weight: 700;
+    font-size: 1.6em;
+    margin: 0em;
+    line-height: 1.4;
 }
 .product-card>.product-img>img{
     object-fit: cover;
@@ -16,29 +34,37 @@
     height:100%;
 }
 .product-card>.infos{
-    width:90%;
+    width: 24em;
+    margin-top: 0.5em;
 }
 .product-card>.infos>.rating-section{
     display: flex;
 
 }
-.product-card>.infos>.price-div-parent{
-    position: relative;
-}
-.product-card>.infos>.price-div-parent>.price-div{
+
+.price-div{
     position: absolute;
-    right:0.5em;
+    right: 1em;
+    bottom: 0.4em;
 }
 
-.product-card>.infos>.price-div-parent>.price-div>.original-price{
+.price-div>.original-price{
     
     text-decoration: line-through;
     position: absolute;
     top: -0.8em;
-    font-size: 0.7em;
+    font-size:1.2em;
     left: -1em;
     font-weight: 500;
+    margin:0em;
 }
-.product-card>.infos>.price-div-parent>.price-div>.promotion-price{
+.price-div>.promotion-price{
     font-weight: bolder;
+    font-size:1.7em;
+    margin:0em;
+
+}
+.product-desc{
+    height:2.4em;
+    overflow: hidden;
 }

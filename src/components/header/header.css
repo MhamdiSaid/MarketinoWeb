@@ -1,0 +1,22 @@
+.header{
+    display: flex;
+    align-items: center;
+    width:100%;
+    background-color: rgb(98, 168, 238);
+    height:4em;
+}
+.header>.logo-storeName{
+    display:flex;
+    align-items: center;
+    height: 100%;
+    margin-left:1.5em;
+    
+
+}
+.header>.logo-storeName>h3{
+    font-size: 1.4em;
+    font-family: 'Courier New', Courier, monospace;
+    margin:none;
+    margin-left: 0.3em;
+
+}
