@@ -1,7 +1,7 @@
-import "./avatar.css";
+import "./icon.css";
 
 
-export default function Avatar({width}){
+export default function Icon({width}){
 
     return(
         <div className="avatar" style={{width:`${width}em`,height:`${width}em`}}>
