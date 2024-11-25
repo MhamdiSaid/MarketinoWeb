@@ -15,8 +15,26 @@ export default function Header(){
                 <h3 >Marketino</h3>
                 </div>
                 <SearchBar  widthValue={15} />
+                <div className="orders-card">
+                    
+                    <p>Orders</p>
+                    <div className="dividor"></div>
+                    <Icon width={2} avatar="card"></Icon>
+                    <p className="card-name">Card</p>
+                    <div className="card-count">
+                    <p >5</p>
+                    </div>
+                    
+                </div>
                 <div className="user-icon">
-                    <Icon width={3} />
+                <div className="social">
+                    <Icon width={2} avatar="instagram"></Icon>
+                    <Icon width={2} avatar="x"></Icon>
+                    <Icon width={2} avatar="facebook"></Icon>
+                    <Icon width={2} avatar="send"></Icon>
+
+                </div>
+                    <Icon width={2.8} avatar="avatar"/>
                 </div>
 
         </div>

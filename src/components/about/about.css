@@ -1,0 +1,42 @@
+.footer-about{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+.about{
+    display:flex;
+    justify-content: center;
+    background-color: #84BAD2;
+    width:100%;
+}
+.about .row{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+}
+.about .row .col{
+    text-align: center;
+}
+.footer-about .separator-line{
+    background-color: #a5a5a5;
+    width:80%;
+    height:0.11rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.developer-infos{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+    width:100%;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+
+}
+.made-by-love{
+    position:absolute;
+    left:0.2rem;
+    font-size: 0.8rem;
+}

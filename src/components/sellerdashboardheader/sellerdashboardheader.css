@@ -1,0 +1,45 @@
+.SellerDashBoardHeader{
+    height:3rem;
+    width:100%;
+    background-color: rgb(30, 30, 30);
+    display:flex;
+    align-items: center;
+    position:relative;
+    justify-content: center;;
+}
+.SellerDashBoardHeader>.contact-phone-whatsapp{
+    position:absolute;
+    right:0.7rem;
+    height:100%;
+    display:flex;
+    align-items: center;
+}
+.SellerDashBoardHeader>.contact-phone-whatsapp>div{
+    height:80%;
+    margin-left: 0.3rem;
+}
+.SellerDashBoardHeader>.contact-phone-whatsapp>div:hover{
+    cursor:pointer;
+}
+.slogan-1 p{
+    color:white;
+    font-weight: bolder;
+    font-size: 1rem;
+}
+.go-to-categories{
+    position:absolute;
+    height:100%;
+    left:0.4rem;
+    display: flex;
+    align-items: center;
+
+}
+.go-to-categories p{
+    color:white;
+}
+.go-to-categories>.go-to-categories-svg{
+    height:1.8rem;
+}
+.go-to-categories:hover{
+    cursor:pointer;
+}

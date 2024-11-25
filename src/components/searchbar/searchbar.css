@@ -24,19 +24,22 @@ input{
         height:80%;
         display: flex;
         align-items: center;
-        padding-left: 4%;
+        padding-left: 1rem;
         
         object-fit: contain;
-        width:8%;
+        width:2.6rem;
     
         
 
 }
-
+.searchIcon:hover,.filterIcon:hover,.filterIcon-p:hover{
+        cursor:pointer;
+}
 .filterIcon{
         height: 90%;
         margin-right: 2%;
         width: 6.6%;
+        display: flex;
         
 }
 svg{
@@ -46,4 +49,13 @@ svg{
 }
 .searchIcon>svg{
         height: 70%;
+}
+p{
+        margin:0;
+}
+input{
+        color:black;
+}
+.orders-card>div:hover,.orders-card>p:hover{
+        cursor:pointer;
 }

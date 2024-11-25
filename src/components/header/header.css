@@ -2,8 +2,9 @@
     display: flex;
     align-items: center;
     width:100%;
-    background-color: rgb(98, 168, 238);
+    background-color: #b1d8e9;
     height:4em;
+    position:relative;
 }
 .header>.logo-storeName{
     display:flex;
@@ -22,5 +23,65 @@
 }
 
 .header>.searchbar{
-    margin-left:7em;
+    margin-left:1%;
+}
+.user-icon{
+    position:absolute;
+    right:1rem;
+    display: flex;
+    align-items: center;
+   
+}
+.logo-storeName h3{
+        margin:0rem;
+        margin-left:0.3rem;
+}
+.social{
+    display:flex;
+    align-items: center;
+    height: 1.5rem;
+}
+.social>div{
+    margin-left:0.3rem
+
+}
+.social>div:hover,.avatar:hover{
+    cursor: pointer;
+}
+.orders-card{
+    display:flex;
+    align-items: center;
+}
+.orders-card{
+    height:1.5rem;
+}
+.orders-card>p{
+    margin-left:0.3rem;
+}
+.orders-card>.avatar{
+    margin-left:0.3rem;
+    margin-bottom: 0.36rem;
+}
+.orders-card .dividor{
+    width:0.09rem;
+    height:100%;
+    background-color:black;
+    margin-left: 0.3rem;
+}
+.orders-card>.card-name{
+    margin-left: 0.1rem;
+}
+.orders-card>.card-count{
+    border-radius: 50%;
+    background-color: #3DC47E;
+    width:1.5rem;
+    height:1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:white;
+}
+.user-icon>.avatar{
+    border: 0.1rem solid black;
+    border-radius: 50%;
 }

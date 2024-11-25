@@ -1,0 +1,18 @@
+.category-cart{
+    display:flex;
+    align-items: center;
+   overflow-x: scroll;
+   padding:0.4rem;
+   margin-bottom: 6rem;
+   
+}
+.category-sub-root{
+    background-color: #84BAD2;
+    margin: 0.6rem;
+    border-radius: 1rem;;
+}
+.category-sub-root>h4{
+    margin: 0.3rem;
+   
+  
+}

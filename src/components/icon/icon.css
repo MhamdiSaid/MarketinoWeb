@@ -1,7 +1,5 @@
 .avatar{
-    border-radius: 50%;
-    border: 0.15em solid black;
-    overflow: hidden;
+   
 }
 .avatar>svg{
     width:100%;

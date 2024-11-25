@@ -13,7 +13,7 @@ export default function ProductCard({width}){
             <p>A Beautifull Watch</p>
             </div>
             <div className="rating-section">
-                <RatingBar  ratingprop={4.5} width={8}/>
+                <RatingBar  ratingprop={4.5} width={6}/>
                 <p>(2999)</p>
             </div>
             
