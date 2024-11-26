@@ -10,7 +10,12 @@ import SellerDashBoardHeader from "./components/sellerdashboardheader/sellerdash
 import Slogan from "./components/slogan/slogan.tsx";
 import Category from "./components/Category/category.tsx";
 import About from "./components/about/about.tsx";
+import Review from "./components/reviews/reviews.tsx";
 import ProductDescription from "./components/productDescription/productDescription.tsx";
+import PercentageDiv from "./components/percentagediv/percentagediv.tsx";
+import ProductCaracteristics from "./components/`productCaracteristics/productCaracteristics.tsx";
+
+import ProductRate from "./components/productrate/productrate.tsx";
 import "./App.css";
 function App() {
   
@@ -21,6 +26,8 @@ function App() {
     <Header/>
    <SellerDashBoardHeader />
    <ProductDescription/>
+    <ProductRate />
+    <Review/>
         
     </>
   )

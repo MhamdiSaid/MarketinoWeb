@@ -1,0 +1,104 @@
+body{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(rgb(41 41 41) 0%, rgb(0 0 0) 100%);
+    margin: 0em;
+}
+
+.form-parent{
+    width:45rem;
+    max-width:100%;
+    background-color: aqua;
+
+    background-color: #121212;
+    border-radius: 0.7em;
+    margin: 0em;
+    margin-top: 1.5em;
+}
+input[type="text"],input[type="password"],input[type="submit"],.register-button,.next{
+    width: 25rem;
+    background-color: #1a1a1a;
+    height: 2.6rem;
+    border: 0.09rem solid #5d5d5d;
+    border-radius: 0.2rem;
+    color: white;
+    font-size: 1em;
+    margin-top:1rem;
+    padding-left: 0.4rem;
+   
+
+}
+input[type="submit"],.next{
+    background-color: #00a367;
+    border-radius: 1rem;
+}
+.cryptino-icon{
+    width: 3rem;
+    height: 3rem;
+}
+svg{
+    
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+h3{
+    color: white;
+    font-size: 2rem;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.4rem;;
+}
+.register-button{
+    display: flex;
+    justify-content: center;
+    align-items: 0rem;
+
+}
+.forgot-password p{
+    color: white;
+}
+.register>a{
+    margin-left: 0.4rem;
+}
+.register>span{
+    color: #8c8c8c;
+    
+}
+.register>a>span{
+    color: #ffffff;
+    
+}
+@media (max-width:400px){
+    input[type="text"],input[type="password"],input[type="submit"],.register-button,.next{
+        width: 93%;
+
+        
+        
+    }
+    .form-parent{
+        margin: 0em;
+    }
+    h3{
+        font-size: 1.5rem;
+    }
+    .forgot-password p{
+        font-size: 0.9rem;
+    }
+    .register>a{
+        margin-left: 0.4rem;
+    }
+    .register>span{
+        font-size: 0.9rem;
+        
+    }
+    .register>a>span{
+        font-size: 0.9rem;
+        
+    }
+    
+}

@@ -1,0 +1,31 @@
+.add-rate .star-rate:hover{
+    cursor:pointer;
+    
+
+
+}
+.add-rate{
+    width:65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.add-rate .rate{
+    width: 8rem;
+    height: 2rem;
+    background-color: #619fba;
+    margin-top: 1rem;
+    border-radius: 1rem;
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+}
+.add-rate textarea{
+    margin-top: 1rem;
+    width: 23rem;
+    border-radius: 0.6rem;
+    background-color: #cef0ff;
+    height: 5rem;
+}

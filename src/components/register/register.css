@@ -1,0 +1,78 @@
+.finish-percent{
+    height: 0.2em;
+    width: 80%;
+}
+.finish-percent>div{
+    height: 0.2em;
+    inline-size: 0%;
+    background-color: #00a367;
+    transition: inline-size 1s;
+}
+.name{
+    display: flex;
+    gap: 2%;
+    align-items: center;
+    width:25rem;
+}
+.name>input{
+    width: 49%;
+}
+.back{
+    display:flex;
+    align-items: center;
+    height:3rem;
+    width:70%;
+    margin-top: 1em;
+}
+.back-svg{
+    width: 1.6rem;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+.back-svg>svg{
+    fill:rgb(154, 154, 154);
+}
+.back-svg>svg:hover{
+    fill:rgb(255, 255, 255);
+}
+.back-text>p:nth-child(2) {
+    color: white;
+    margin: 0em;
+    margin-top: 0.4rem;
+    font-size: 1.1em;
+}
+.back-text>p:nth-child(1){
+    color: rgb(179, 179, 179);
+    margin: 0em;
+    margin-bottom: 0.6rem;
+    font-size: 1em;
+}
+.back-text{
+    width: 100%;
+   
+}
+
+input[name='code']::placeholder{
+    text-align: center;
+}
+input[name='code']{
+   text-align: center;
+   width:10rem;
+}
+@media(max-width:500px){
+    .finish-percent,.back{
+        
+        width: 93%;
+    }
+  
+
+}
+@media (max-width:400px){
+    .name{
+            width:93%;
+    }
+    input[name='code']{
+        width:80%;
+    }
+
+}

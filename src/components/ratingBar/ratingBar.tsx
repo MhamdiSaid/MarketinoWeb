@@ -1,8 +1,8 @@
 import "./ratingbar.css";
- function Star({percent,id}:{percent:number,id:string}){
+ function Star({percent,id,margin}:{percent:number,id:string,margin:number}){
    
     return(
-        <div>
+        <div className="star-rate" style={{"--margin":`${margin}rem`} as any}>
         <svg  height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 47.94 47.94" xmlSpace="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> 
         <mask id={id}>
       <rect x="0" y="0" width={`${percent*100}%`} height="100%" fill="white" />
@@ -17,8 +17,9 @@ import "./ratingbar.css";
     )
 }
 
-export default  function RatingBar({ratingprop,width}:{ratingprop:number,width:number}){
+export default  function RatingBar({ratingprop,width,margin}:{ratingprop:number,width:number,margin:number}){
         let rating=ratingprop;
+        
         
 
         let iconArray=[];
@@ -26,7 +27,7 @@ export default  function RatingBar({ratingprop,width}:{ratingprop:number,width:n
             
             if(rating >= 1){
               
-                iconArray.push(<Star id={`${i}`} key={i} percent={1} />)
+                iconArray.push(<Star id={`${i}`} key={i} percent={1} margin={margin}/>)
             }
             else if(rating>0){
                if(rating===0.25){
@@ -35,11 +36,11 @@ export default  function RatingBar({ratingprop,width}:{ratingprop:number,width:n
             else if(rating===0.75){
                 rating=0.6;
                }
-                iconArray.push(<Star id={`${i}`} key={100} percent={rating} />);
+                iconArray.push(<Star id={`${i}`} key={100} percent={rating} margin={margin}/>);
             }
             else{
              
-                iconArray.push(<Star id={`${i}`} key={i} percent={0.0} />);
+                iconArray.push(<Star id={`${i}`} key={i} percent={0.0} margin={margin}/>);
 
             }
             rating--;

@@ -1,0 +1,46 @@
+.product-rate-root{
+    display: flex;
+    margin-top: 1rem;
+}
+.product-rate{
+    width: 45%;
+    margin-left: 0.8rem;
+}
+.product-rate .percentage-bar{
+        display: flex;
+        align-items: center;
+}
+.product-rate .percentage-div{
+    margin-left:0.4rem;
+    margin-right: 0.4rem;
+}
+.percentage-bar{
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+    width: 100%;
+}
+.rating-bar-product-rate{
+    display: flex;
+    align-items: center;
+}
+.rating-bar-product-rate p{
+    margin-left: 0.5rem;
+}
+.product-rate-add-percentage{
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.product-rate-add-percentage .add-rate{
+    width: 55%;
+    position: absolute;
+    right: 1rem;
+}
+.product-rate-add-percentage .nbre-star-percentage-bar{
+    
+
+}
+.product-rate-add-percentage>div{
+    width:100%;
+}

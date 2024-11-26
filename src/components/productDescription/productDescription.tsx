@@ -56,13 +56,16 @@ export default function ProductDescription(){
 
                     </div>
                 <div className="products-details">
+                   
                     <p className="product-name">Apple Watch</p>
                     <p className="description">Best Apple Watch forever order nddddddd dddddd ddddd dd ddddlslsqqqq qqq qqqqqq qp ppppppp pppppp pppaow !</p>
                     <div className="prices">
                     <p className="price-per-elmt">$93838</p>
                     <p className="products-details-discount">$55556</p>
                     </div>
+                    <div className="variants-caracteristics">
                     <div className="variants">
+                    
                     <p className="variants-section">choose something</p>
                     <select className="form-select" aria-label="Default select example">
                     <option selected>Open this select menu</option>
@@ -126,6 +129,21 @@ export default function ProductDescription(){
 
 
 
+
+
+                    </div>
+                    <div className="caracteristics">
+                        <h6>Caracteristics</h6>
+                        <p><span>color :</span> red bl;ack color best product inas dndnd colordkkd</p>
+                        <p><span>width :</span> red bl;ack</p>
+                        <p><span>color :</span>  red b red bl;ack color best product inas dndnd colordkkdl;ack color best product inas dndnd colordkkdred bl;ack color best product inas dndnd colordkkd</p>
+                        <p><span>color :</span>  red b red bl;ack color best product inas dndnd colordkkdl;ack color best product inas dndnd colordkkdred bl;ack color best product inas dndnd colordkkd</p>
+                        <p><span>color :</span>  red b red bl;ack color best product inas dndnd colordkkdl;ack color best product inas dndnd colordkkdred bl;ack color best product inas dndnd colordkkd</p>
+                        <p><span>color :</span>  red b red bl;ack color best product inas dndnd colordkkdl;ack color best product inas dndnd colordkkdred bl;ack color best product inas dndnd colordkkd</p>
+                        <p><span>color :</span>  red b red bl;ack color best product inas dndnd colordkkdl;ack color best product inas dndnd colordkkdred bl;ack color best product inas dndnd colordkkd</p>
+
+
+                    </div>
 
 
                     </div>

@@ -1,0 +1,13 @@
+.percentage-div{
+    width:var(--width);
+    height:1rem;
+    border: 0.088rem solid rgb(91, 91, 91);
+    border-radius: 0.2rem;
+    overflow: hidden;
+}
+.colored-percentage{
+    width:var(--percent);
+    background-color: #de7921;
+    height:100%;
+
+}

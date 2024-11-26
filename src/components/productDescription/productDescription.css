@@ -8,7 +8,8 @@
 
 }
 .product-description .pictures{
-    width:45%;
+    width:35%;
+    height: 70%;
    
     
 }
@@ -16,9 +17,7 @@
     height:100%;
    
 }
-.product-description .pictures{
-    height: 95%;
-}
+
 .product-description .carousel-inner{
   height:100%;
   overflow:hidden;
@@ -41,7 +40,7 @@
 .products-details{
   height: 100%;
   margin-top: 0.3rem;
-  width:50%;
+  width:60%;
   position: relative;
   bottom: 0.6rem;
   margin-top: 2rem;
@@ -55,8 +54,10 @@
     margin-right: 0.8rem;;
 
   }
-  .product-description .variants{
+  .product-description .variants,.product-description .caracteristics{
         max-height:19rem;
+        width:48%;
+        margin-left: 0.6rem;;
   }
   .product-description   .productdetails{
         width:100%;
@@ -101,7 +102,7 @@
     font-weight: bolder;
     font-size: 1.2rem;
 }
-.products-details .variants{
+.products-details .variants,.products-details .caracteristics{
     overflow-y: scroll;
     border: 0.1rem solid #2477b5;
     padding: 0.3rem;
@@ -152,7 +153,7 @@
     background-color: #b1d8e9;
     border: 0.1rem solid #1363b1;
     padding-bottom: 0.6rem;
-    width:15rem;
+    width: 100%;
     font-size: 0.9rem;
 }
 .variants .input-text>input::placeholder{
@@ -172,4 +173,18 @@
     display:flex;
     position: relative;
     
+}
+.variants-caracteristics{
+    display: flex;
+}
+.caracteristics p span{
+    font-weight: bolder;
+    font-size: 0.8rem;
+    font-style: normal;
+}
+.caracteristics p {
+    font-style: italic;
+}
+.caracteristics h6{
+    font-weight: bolder;
 }
