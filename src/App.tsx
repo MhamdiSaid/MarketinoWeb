@@ -10,6 +10,7 @@ import SellerDashBoardHeader from "./components/sellerdashboardheader/sellerdash
 import Slogan from "./components/slogan/slogan.tsx";
 import Category from "./components/Category/category.tsx";
 import About from "./components/about/about.tsx";
+import ProductDescription from "./components/productDescription/productDescription.tsx";
 import "./App.css";
 function App() {
   
@@ -19,10 +20,7 @@ function App() {
     
     <Header/>
    <SellerDashBoardHeader />
-    <Carousel/>
-    <Slogan/>
-    <Category/>
-    <About/>
+   <ProductDescription/>
         
     </>
   )

@@ -1,0 +1,175 @@
+ .product-description{
+    height:30rem;
+   
+    display:flex;
+    align-items: center;
+    margin-left: 0.6rem;
+    position: relative;
+
+}
+.product-description .pictures{
+    width:45%;
+   
+    
+}
+.product-description .carousel{
+    height:100%;
+   
+}
+.product-description .pictures{
+    height: 95%;
+}
+.product-description .carousel-inner{
+  height:100%;
+  overflow:hidden;
+  border:0.15rem solid #1f76a2;
+  border-radius:1rem;
+}
+
+.product-description .carousel-inner img{
+    object-fit: cover;
+    width:100%;
+    height:100%;
+}
+.product-description  .carousel-item{
+    height:100%;
+}
+.product-name{
+    font-weight: bolder;
+    font-size: 1.2rem;
+}
+.products-details{
+  height: 100%;
+  margin-top: 0.3rem;
+  width:50%;
+  position: relative;
+  bottom: 0.6rem;
+  margin-top: 2rem;
+
+}
+.product-description .dividor{
+    width:0.1rem;
+    background-color: rgb(91, 90, 89);
+    height:90%;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;;
+
+  }
+  .product-description .variants{
+        max-height:19rem;
+  }
+  .product-description   .productdetails{
+        width:100%;
+        position:absolute;
+        bottom:0.8rem;
+    }
+    .product-description .buttons{
+        height:2.7rem;
+        width:100%;
+        display: flex;
+        justify-content: space-around;
+
+    }
+    .product-description .buttons .shop-now{
+        width:47%;
+        background-color: rgb(0, 199, 20);
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color:white
+    }
+    .product-description .buttons .add-to-cart{
+        width:47%;
+        background-color: rgb(247, 33, 0);
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color:white;
+    }
+.product-description    .description{
+    font-size: 0.89em;
+}
+.price-per-elmt{
+    font-weight: bolder;
+    color: #087c3c;
+}
+.total-count{
+    color: red;
+    margin-left: 0.5rem;
+    font-weight: bolder;
+    font-size: 1.2rem;
+}
+.products-details .variants{
+    overflow-y: scroll;
+    border: 0.1rem solid #2477b5;
+    padding: 0.3rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+}
+.variants .form-select{
+    width:11rem;
+    font-size: 0.8rem;
+    height:1.5rem;
+    height:1.9rem;
+    margin: 0rem;
+    padding: 0rem;
+    padding-left: 0.4rem;
+    background-color: #2ca4ff;
+    color: white;
+
+}
+.variants .form-check input{
+    background-color: #0db6ff;
+    border: 0.06rem solid #000000;
+
+}
+.variants .form-check label{
+    color: #005e87;
+}
+.file-upload::-webkit-file-upload-button{
+    background-color: #2ca4ff;
+    border: 0rem;;
+    padding: 0.2rem;
+    border-radius:0.6rem ;
+}
+.file-upload::-webkit-file-upload-button:hover{
+    background-color: #0074ce;
+    cursor: pointer;
+}
+.file-upload,.file-upload:hover{
+    background-color: inherit;
+}
+.variants .variants-section{
+    font-weight: bolder;
+}
+
+
+
+.variants .input-text>input{
+    height: 1.8rem;
+    background-color: #b1d8e9;
+    border: 0.1rem solid #1363b1;
+    padding-bottom: 0.6rem;
+    width:15rem;
+    font-size: 0.9rem;
+}
+.variants .input-text>input::placeholder{
+    font-size: 0.9rem;
+}
+
+.products-details .products-details-discount{
+    text-decoration: line-through;
+    color: #ff0000;
+    font-size: 0.7rem;
+    font-weight: bolder;
+    position: absolute;
+    left: 3.7rem;
+    top: 0.3rem;
+}
+.products-details .prices{
+    display:flex;
+    position: relative;
+    
+}
