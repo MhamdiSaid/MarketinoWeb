@@ -1,0 +1,10 @@
+.finish-percent>div{
+    height: 0.2em;
+    inline-size: 0%;
+    background-color: #00a367;
+    transition: inline-size 1s;
+}
+.finish-percent{
+    height: 0.2em;
+    width: 80%;
+}

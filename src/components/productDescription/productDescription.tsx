@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react";
 import "./productDescription.css";
 
-export default function ProductDescription(){
+export default function ProductDescription({product}){
+
+/*
+    useEffect(()=>{
+        fetch(url,{
+            method:"GET",
+            headers:{
+              "Authorization":"Bearer cea02094ade92909e0920d91d59e16ffa1ed675d581275fe56250d4830c9ed5910fab49d1cccc99329e53ae1559595fff7c23370e9580c7f59587853"
+            }
+       
+          }).then((res)=>{
+            return res.json();
+        }).then((json)=>{
+            setInfos(json[0]);
+            console.log(json);
+        });
+    },[]);*/
     return(
 
 
@@ -57,11 +74,11 @@ export default function ProductDescription(){
                     </div>
                 <div className="products-details">
                    
-                    <p className="product-name">Apple Watch</p>
-                    <p className="description">Best Apple Watch forever order nddddddd dddddd ddddd dd ddddlslsqqqq qqq qqqqqq qp ppppppp pppppp pppaow !</p>
+                    <p className="product-name">{product.productname}</p>
+                    <p className="description">{product.description}</p>
                     <div className="prices">
-                    <p className="price-per-elmt">$93838</p>
-                    <p className="products-details-discount">$55556</p>
+                    <p className="price-per-elmt">${product.price}</p>
+                    <p className="products-details-discount">${product.discount}</p>
                     </div>
                     <div className="variants-caracteristics">
                     <div className="variants">
@@ -123,24 +140,13 @@ export default function ProductDescription(){
                     <div className="mb-3 input-text">
                     <input type="text" className="form-control" id="formGroupExampleInput" placeholder="enter"/>
                     </div>
-
-
-
-
-
-
-
-
                     </div>
                     <div className="caracteristics">
                         <h6>Caracteristics</h6>
-                        <p><span>color :</span> red bl;ack color best product inas dndnd colordkkd</p>
-                        <p><span>width :</span> red bl;ack</p>
-                        <p><span>color :</span>  red b red bl;ack color best product inas dndnd colordkkdl;ack color best product inas dndnd colordkkdred bl;ack color best product inas dndnd colordkkd</p>
-                        <p><span>color :</span>  red b red bl;ack color best product inas dndnd colordkkdl;ack color best product inas dndnd colordkkdred bl;ack color best product inas dndnd colordkkd</p>
-                        <p><span>color :</span>  red b red bl;ack color best product inas dndnd colordkkdl;ack color best product inas dndnd colordkkdred bl;ack color best product inas dndnd colordkkd</p>
-                        <p><span>color :</span>  red b red bl;ack color best product inas dndnd colordkkdl;ack color best product inas dndnd colordkkdred bl;ack color best product inas dndnd colordkkd</p>
-                        <p><span>color :</span>  red b red bl;ack color best product inas dndnd colordkkdl;ack color best product inas dndnd colordkkdred bl;ack color best product inas dndnd colordkkd</p>
+                       {product.caracteristics.map((caracteristic:{type:string,value:string})=>{
+                        return <p><span>{caracteristic.type} :</span> {caracteristic.value}</p>
+                       })}
+                        
 
 
                     </div>

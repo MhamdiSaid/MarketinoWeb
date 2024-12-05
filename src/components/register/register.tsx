@@ -1,7 +1,106 @@
+import "../login/login.css";
 import "./register.css";
 
 
 export default function Register(){
+   
+setTimeout(()=>{
+    let submitbutton:any=document.querySelector("input[type='submit']");
+    let email:any=document.querySelector("input[name='email']");
+    let password:any=document.querySelector("input[name='password']");
+    let firstname:any=document.querySelector("input[name='firstname']");
+    let code:any=document.querySelector("input[name='code']");
+
+    let lastname:any=document.querySelector("input[name='lastname']");
+    let next:any=document.querySelector(".next");
+    let finishPercent:any=document.querySelector(".finish-percent>div");
+    let back:any=document.querySelector(".back-svg");
+    var firstparagraph:any=document.querySelector(".back-text>p:nth-child(1)");
+    var scndparagraph:any=document.querySelector(".back-text>p:nth-child(2)");
+if(submitbutton==null || password==null || code==null || back==null )return;
+
+submitbutton.addEventListener("click",(event)=>{
+    event.preventDefault();
+    password.style.display="none";
+    code.style.display="block";
+    back.parentElement.innerHTML="";
+})
+
+    
+
+    let i=0;
+    back.addEventListener("click",()=>{
+        i--;
+        finishPercent.style.inlineSize=i*33+"%";
+        if(i===0){
+           
+            
+            firstparagraph.innerHTML="Step 1 Of 3";
+            scndparagraph.innerHTML="Setting Email";
+            firstname.style.display="none";
+            lastname.style.display="none";
+            email.style.display="block";
+       
+        }
+        else if(i===1){
+          
+
+            firstparagraph.innerHTML="Step 2 Of 3";
+            scndparagraph.innerHTML="Setting names";
+            password.style.display="none";
+            next.style.display="block";
+            submitbutton.style.display="none";
+            firstname.style.display="block";
+            lastname.style.display="block";
+            
+        }
+        else if(i===2){
+            firstparagraph.innerHTML="Step 3 Of 3";
+            scndparagraph.innerHTML="Setting password";
+            code.style.display="none";
+            password.style.display="block";
+          
+
+
+        }
+    })
+    next.addEventListener("click",()=>{
+        i++;
+        finishPercent.style.inlineSize=i*33+"%";
+        if(i===1){
+            firstparagraph.innerHTML="Step 2 Of 3";
+            scndparagraph.innerHTML="Setting Names";
+            email.style.display="none";
+            firstname.style.display="block";
+            lastname.style.display="block";
+        }
+        else if(i===2){
+            firstparagraph.innerHTML="Step 3 Of 3";
+            scndparagraph.innerHTML="Setting password";
+            firstname.style.display="none";
+            lastname.style.display="none";
+            password.style.display="block";
+            next.style.display="none";
+            submitbutton.style.display="block";
+        }
+        else if(i===3){
+            password.style.display="none";
+            code.style.display="block";
+
+
+        }
+
+    });
+
+
+
+
+    
+
+},2000)
+
+
+
     return(
         <div className="form-parent">
                 <form>
@@ -38,7 +137,7 @@ export default function Register(){
                         </div>
                 </form>
                
-
+            
         </div>
     )
 }

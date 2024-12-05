@@ -1,36 +1,113 @@
-import Logo from "./components/Logo/logo.tsx"
-import Avatar from "./components/avatar/avatar.tsx"
-import Header from "./components/header/header.tsx"
-import ProductCard from "./components/productCard/productCard.tsx"
-import RatingBar from "./components/ratingBar/ratingBar.tsx"
-import Searchbar from "./components/searchbar/searchbar.tsx"
-import ShopingCart from "./components/ShopingCart/ShoppingCart.tsx"
-import Carousel from "./components/carousel/carousel.tsx"
-import SellerDashBoardHeader from "./components/sellerdashboardheader/sellerdashboardheader.tsx";
-import Slogan from "./components/slogan/slogan.tsx";
-import Category from "./components/Category/category.tsx";
-import About from "./components/about/about.tsx";
-import Review from "./components/reviews/reviews.tsx";
-import ProductDescription from "./components/productDescription/productDescription.tsx";
-import PercentageDiv from "./components/percentagediv/percentagediv.tsx";
-import ProductCaracteristics from "./components/`productCaracteristics/productCaracteristics.tsx";
 
-import ProductRate from "./components/productrate/productrate.tsx";
 import "./App.css";
+import {useEffect,useRef,useState} from "react";
+import Header from "./components/header/header";
+import SellerDashBoardHeader from "./components/sellerdashboardheader/sellerdashboardheader";
+import ProductDescription from "./components/productDescription/productDescription";
+import ProductRate from "./components/productrate/productrate";
+import Reviews from "./components/reviews/reviews";
 function App() {
+    const [product,setProduct]=useState(null);
   
+    useEffect(()=>{
+      fetch("http://localhost:3001/stores/helloword/products/abdedrahimczaddssddcccssax",
+        {
+          headers:{
+            "Authorization":"Bearer cea02094ade92909e0920d91d59e16ffa1ed675d581275fe56250d4830c9ed5910fab49d1cccc99329e53ae1559595fff7c23370e9580c7f59587853"
+          }
+        }
+      ).then(res=>{
+        return res.json();
+      }).then(json=>{
+        console.log(json);
+        setProduct(json);
+        
+      })
+    },[]);
 
   return (
-    <>
-    
-    <Header/>
+  
+<>
+<Header/>
+      <SellerDashBoardHeader />
+      {product && <ProductDescription product={product}/>}
+      <ProductRate />
+      <Reviews/>
+
+     </>
+  
+  )
+}
+
+
+export default App;
+/*
+
+   <Header/>
    <SellerDashBoardHeader />
    <ProductDescription/>
     <ProductRate />
     <Review/>
-        
-    </>
-  )
-}
 
-export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     <Header/>
+      <SellerDashBoardHeader />
+      <ProductDescription url="http://localhost:3001/stores/helloword/products/abdedrahimczaddssddcccssax"/>
+      <ProductRate />
+      <Review/>
+    */
+/*
+ <>
+      <Header/>
+      <SellerDashBoardHeader/>
+      <Carousel/>
+      <Category categories={cat}/>
+      <Slogan/>
+      <About/>
+    
+
+    </>
+    */
+
+
+      /*
+  const categories=useRef(null);
+  const [cat,setcat]=useState([]);
+  let callback:any=()=>{
+    let url="http://localhost:3001/stores/helloword/categories?n=all";
+    
+    fetch(url,{
+      method:"GET",
+      headers:{
+        "Authorization":"Bearer cea02094ade92909e0920d91d59e16ffa1ed675d581275fe56250d4830c9ed5910fab49d1cccc99329e53ae1559595fff7c23370e9580c7f59587853"
+      }
+ 
+    }).then((res)=>{
+      return res.json();
+    }).then((json=>{
+      console.log("hello");
+      setcat(json);
+      console.log(json)
+    }));
+   
+  
+    return ()=>{};
+    
+ } 
+
+  useEffect(callback,[]);
+  */

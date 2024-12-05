@@ -1,8 +1,9 @@
 
 import "./productCard.css";
 import RatingBar from "../ratingBar/ratingBar";
-export default function ProductCard({width}){
-
+import { useEffect } from "react";
+export default function ProductCard({width,product}){
+        let {g,setRating}=useEffect([]);
     return(
         <div className="product-card" >
         <div className="product-img">
@@ -10,10 +11,10 @@ export default function ProductCard({width}){
         </div>
         <div className="infos">
             <div className="product-desc">
-            <p>A Beautifull Watch</p>
+            <p>{product.name}</p>
             </div>
             <div className="rating-section">
-                <RatingBar  ratingprop={4.5} width={6}/>
+                <RatingBar  ratingprop={4.5} width={6} margin={0}/>
                 <p>(2999)</p>
             </div>
             
