@@ -18,6 +18,7 @@ export default function ProductDescription({product}){
             console.log(json);
         });
     },[]);*/
+    let images_path=`http://localhost:3001/images/stores/${"helloword"}/products/${product.productid}/`
     return(
 
 
@@ -37,19 +38,19 @@ export default function ProductDescription({product}){
             
             <div className="carousel-inner">
             <div className="carousel-item active">
-            <img src="./c.png" className="d-block w-100" alt="..."/>
+            <img src={images_path+"1.svg"} className="d-block w-100" alt="..."/>
             </div>
             <div className="carousel-item">
-            <img src="kjk.jpg" className="d-block w-100" alt="..."/>
+            <img src={images_path+"2.svg"} className="d-block w-100" alt="..."/>
             </div>
             <div className="carousel-item">
-            <img src="./c.png" className="d-block w-100" alt="..."/>
+            <img src={images_path+"3.svg"} className="d-block w-100" alt="..."/>
             </div>
             <div className="carousel-item">
-            <img src="test.jpeg" className="d-block w-100" alt="..."/>
+            <img src={images_path+"3.svg"} className="d-block w-100" alt="..."/>
             </div>
             <div className="carousel-item">
-            <img src="./c.png" className="d-block w-100" alt="..."/>
+            <img src={images_path+"4.svg"} className="d-block w-100" alt="..."/>
             </div>
             </div>
 
@@ -82,64 +83,120 @@ export default function ProductDescription({product}){
                     </div>
                     <div className="variants-caracteristics">
                     <div className="variants">
+                    {product.variants.map((variant)=>{
+                       // variant.valuespattern="said|mhamdi|iliaas|hamid";
+                        //variant.input_type="radio";
+                        console.log("kk")
+                        if(variant.input_type==="text"){
+                            return(
+                                <>
+                                <p className="variants-section">{variant.section}</p>
+
+                                <div className="mb-3 input-text">
+                                <input type="text" name={variant.section}  className="form-control" id="formGroupExampleInput" placeholder="you answer here"/>
+                                </div>
+                                </>
+                            )
+
+                        }else if(variant.input_type==="checkbox"){
+                            
+                            let checkfields=variant.valuespattern.split("|");
+                            return(
+                            <>
+                                <p className="variants-section">{variant.section}</p>
+                                
+                                
+                                {checkfields.map((obj:string)=>{
+                                    return(
+                                        <>
+                                        <div className="form-check">
+                                        <input className="form-check-input" name={variant.section} value={obj} type="checkbox"  id="flexCheckDefault"/>
+                                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                                            {obj}
+                                        </label>
+                                        </div>
+                                        </>
+                                    );
+                                })}
+                                
+                               
+                               
+                            </>
+                            );
+
+                        }else if(variant.input_type==="radio"){
+                            console.log("llllllllllllll");
+                            let radioFields=variant.valuespattern.split("|");
+                            console.log(radioFields)
+                            
+                            return (<>
+                                <p className="variants-section">{variant.section}</p>
+                                {
+                                    radioFields.map((obj:string)=>{
+                                        return(
+                                           <>
+                                            <div className="form-check">
+                                            <input className="form-check-input" name={variant.section}  value={obj} type="radio"   id="flexRadioDefault1"/>
+                                            <label className="form-check-label">
+                                                {obj}
+                                            </label>
+                                            </div>
+                                           </> 
+                                        );
+                                    })
+                                }
+                                
+                            </>
+                            );
+                            
+                        }else if(variant.input_type==="file"){
+                            <>
+                                <p className="variants-section">{variant.section}</p>
+                                <div className="input-group mb-3">
+                                <input type="file" name={variant.section}  className=" file-upload" id="inputGroupFile01"/>
+                                </div>
+                            </>
+                            
+                        }else if(variant.input_type==="textarea"){
+                            return null;
+                            
+                        }else if(variant.input_type==="select"){
+                            let regexArray=variant.valuespattern.split("|");
+                            
+                            return(
+
+                               
+                                <>
+                                    <p className="variants-section">{variant.section}</p>
+                                    <select className="form-select" name={variant.section}  aria-label="Default select example">
+                                    {regexArray.map((opt:string)=>{
+                                        return(
+                                            <>
+                                            <option value={opt}>{opt}</option>
+                                            </>
+                                        )
+                                    })}
+                                    
+                                    </select>
+                                </>
+                            )
+                            
+                        }
+                    })}
+                   
+
+
+                  
+
+
                     
-                    <p className="variants-section">choose something</p>
-                    <select className="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                    </select>
-
-
-                    <p className="variants-section">choose something</p>
-                    <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                    <label className="form-check-label" htmlFor="flexCheckDefault">
-                        Default checkbox
-                    </label>
-                    </div>
-                    <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                    <label className="form-check-label" htmlFor="flexCheckDefault">
-                        Default checkbox
-                    </label>
-                    </div>
-                    <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
-                    <label className="form-check-label" htmlFor="flexCheckChecked">
-                        Checked checkbox
-                    </label>
-                    </div>
-
-
-                    <p className="variants-section">choose something</p>
-                    <div className="form-check">
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                    <label className="form-check-label" htmlFor="flexRadioDefault1">
-                        Default radio
-                    </label>
-                    </div>
-                    <div className="form-check">
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
-                    <label className="form-check-label" htmlFor="flexRadioDefault2">
-                        Default checked radio
-                    </label>
-                    </div>
 
 
 
-                    <p className="variants-section">choose something</p>
-                    <div className="input-group mb-3">
-                    <input type="file" className=" file-upload" id="inputGroupFile01"/>
-                    </div>
+                    
 
 
-                    <p className="variants-section">choose something</p>
-
-                    <div className="mb-3 input-text">
-                    <input type="text" className="form-control" id="formGroupExampleInput" placeholder="enter"/>
-                    </div>
+                    
                     </div>
                     <div className="caracteristics">
                         <h6>Caracteristics</h6>

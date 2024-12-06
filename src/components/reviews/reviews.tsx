@@ -1,7 +1,10 @@
 import  "./reviews.css";
 
-
-export default function Reviews(){
+type review_type={firstname:string,lastname:string,rating:string,review:string,userid:string};
+export default function Reviews({product}){
+    let reviews=product.reviews;
+    console.log("llll")
+    console.log(reviews);
     return(
         <div className="reviews">
         <div className="reviews-header">
@@ -11,14 +14,13 @@ export default function Reviews(){
         </div>
         <div className="customer-reviews-root">
         <div className="customer-reviews">
-                <Review/>
-                <Review/>
-                <Review/>
-                <Review/>
-                <Review/>
-                <Review/>
-                <Review/>
-                <Review/>
+               {reviews.map((rev)=>{
+                console.log("+++++++");
+                console.log(rev);
+                console.log("+++++++");
+                return(<> <Review review={rev} /> </>);
+               })}
+                
            
      
         </div>
@@ -27,19 +29,18 @@ export default function Reviews(){
     )
     
 }
-function Review(){
+function Review({review}){
+    
     return(
         <div className="review">
             <div className="reviewer-avatar">
                 <img src="./avatar.svg"/>
                 </div>
-                <p className="reviewer-name">Mhamdi said</p>
+                <p className="reviewer-name">{review.lastname} {review.firstname}</p>
+
                 <p className="review-text">
-                shokran ssshor cc
+                {review.review}
                 </p>
-
-       
-
         </div>
-    )
+    );
 }

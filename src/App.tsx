@@ -10,6 +10,9 @@ function App() {
     const [product,setProduct]=useState(null);
   
     useEffect(()=>{
+      
+      console.log("hey");
+
       fetch("http://localhost:3001/stores/helloword/products/abdedrahimczaddssddcccssax",
         {
           headers:{
@@ -31,8 +34,10 @@ function App() {
 <Header/>
       <SellerDashBoardHeader />
       {product && <ProductDescription product={product}/>}
-      <ProductRate />
-      <Reviews/>
+      
+      {product && <ProductRate reviews={product.reviews}/>}
+
+      {product && <Reviews product={product}/>}
 
      </>
   

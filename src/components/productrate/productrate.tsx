@@ -2,7 +2,41 @@ import "./productrate.css";
 import PercentageDiv from "../percentagediv/percentagediv.tsx";
 import RatingBar from "../ratingBar/ratingBar.tsx";
 import AddRate from "../AddRate/addrate.tsx";
-export default function ProductRate(){
+let predicate=function(rating_target,rating){
+    if(rating_target <= rating && rating<(rating_target+1)){
+        return true;
+    };
+}
+export default function ProductRate({reviews}){
+    console.log("---l---");
+    console.log(reviews)
+    console.log("---l---");
+    let total_revs=reviews.length;
+    let five=reviews.filter((obj)=>{
+          let  rating=parseFloat(obj.rating);
+          if(rating===5)return true;
+          else return false;
+    });
+  
+    let four=reviews.filter((obj)=>{
+        let  rating=parseFloat(obj.rating);
+        return predicate(4,rating)
+    })
+    let three=reviews.filter((obj)=>{
+        let  rating=parseFloat(obj.rating);
+        return predicate(3,rating);
+    })
+    let two=reviews.filter((obj)=>{
+        let  rating=parseFloat(obj.rating);
+        return predicate(2,rating);
+    });
+    let one=reviews.filter((obj)=>{
+        let  rating=parseFloat(obj.rating);
+        return predicate(2,rating);
+    });
+    console.log("\\\\\\\\")
+    console.log(five);
+    console.log(total_revs)
     return(
        
         <div className="product-rate-root">
@@ -11,37 +45,37 @@ export default function ProductRate(){
             <RatingBar ratingprop={2.5} width={6} margin={0}/>
             <p>2.5 of 5</p>
             </div>
-            <p>66,5858 global ratings</p>
+            <p>{total_revs} global ratings</p>
             <div className="product-rate-add-percentage">
             <div>
             <div className="percentage-bar">
                 <p className="nbre-star-percentage-bar">5 star</p>
-                <PercentageDiv width={18} percentage={1}/>
-                <p>100%</p>
+                <PercentageDiv width={18} percentage={(five.length)/total_revs}/>
+                <p>{(five.length)*100/total_revs}%</p>
 
             </div>
             <div className="percentage-bar">
                 <p className="nbre-star-percentage-bar">4 star</p>
-                <PercentageDiv width={18} percentage={0.8}/>
-                <p>80%</p>
+                <PercentageDiv width={18} percentage={(four.length)/total_revs}/>
+                <p>{(four.length)*100/total_revs}%</p>
 
             </div>
             <div className="percentage-bar">
                 <p className="nbre-star-percentage-bar">3 star</p>
-                <PercentageDiv width={18} percentage={0.5}/>
-                <p>60%</p>
+                <PercentageDiv width={18} percentage={(three.length)/total_revs}/>
+                <p>{(three.length)*100/total_revs}%</p>
 
             </div>
             <div className="percentage-bar">
                 <p className="nbre-star-percentage-bar">2 star</p>
-                <PercentageDiv width={18} percentage={0.4}/>
-                <p>40%</p>
+                <PercentageDiv width={18} percentage={(two.length)/total_revs}/>
+                <p>{(two.length)*100/total_revs}%</p>
 
             </div>
             <div className="percentage-bar">
                 <p className="nbre-star-percentage-bar">1 star</p>
-                <PercentageDiv width={18} percentage={0.2} />
-                <p>20%</p>
+                <PercentageDiv width={18} percentage={(one.length)/total_revs} />
+                <p>{one.length*100/total_revs}%</p>
 
             </div>
             </div>

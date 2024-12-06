@@ -55,7 +55,7 @@
 
   }
   .product-description .variants,.product-description .caracteristics{
-        max-height:19rem;
+        height:19rem;
         width:48%;
         margin-left: 0.6rem;;
   }
