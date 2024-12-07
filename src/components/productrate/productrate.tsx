@@ -37,13 +37,19 @@ export default function ProductRate({reviews}){
     console.log("\\\\\\\\")
     console.log(five);
     console.log(total_revs)
+    let ttlrating=reviews.reduce((acc,currentobj)=>{
+        
+        return acc+parseFloat(currentobj.rating);
+    },0);
+    let average_rating=ttlrating/total_revs;
+
     return(
        
         <div className="product-rate-root">
         <div className="product-rate">
             <div className="rating-bar-product-rate">
-            <RatingBar ratingprop={2.5} width={6} margin={0}/>
-            <p>2.5 of 5</p>
+            <RatingBar ratingprop={average_rating} width={6} margin={0}/>
+            <p>{average_rating} of 5</p>
             </div>
             <p>{total_revs} global ratings</p>
             <div className="product-rate-add-percentage">

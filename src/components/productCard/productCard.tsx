@@ -3,7 +3,7 @@ import "./productCard.css";
 import RatingBar from "../ratingBar/ratingBar";
 import { useEffect } from "react";
 export default function ProductCard({width,product}){
-        let {g,setRating}=useEffect([]);
+       // let {g,setRating}=useEffect([]);
     return(
         <div className="product-card" >
         <div className="product-img">

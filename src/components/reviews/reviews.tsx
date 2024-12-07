@@ -1,5 +1,5 @@
 import  "./reviews.css";
-
+import RatingBar from "../ratingBar/ratingBar";
 type review_type={firstname:string,lastname:string,rating:string,review:string,userid:string};
 export default function Reviews({product}){
     let reviews=product.reviews;
@@ -37,6 +37,7 @@ function Review({review}){
                 <img src="./avatar.svg"/>
                 </div>
                 <p className="reviewer-name">{review.lastname} {review.firstname}</p>
+                <RatingBar ratingprop={parseFloat(review.rating)} width={6} margin={0}/>
 
                 <p className="review-text">
                 {review.review}

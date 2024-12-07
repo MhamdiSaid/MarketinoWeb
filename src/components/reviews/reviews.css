@@ -17,6 +17,7 @@
 }
 .review .reviewer-name{
     font-weight: bold;
+    font-size: 0.9rem;;
 }
 .reviewer-avatar{
     width:2.5rem;
