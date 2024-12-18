@@ -2,15 +2,27 @@ import "./productrate.css";
 import PercentageDiv from "../percentagediv/percentagediv.tsx";
 import RatingBar from "../ratingBar/ratingBar.tsx";
 import AddRate from "../AddRate/addrate.tsx";
+import productContext from "../productcontext.tsx";
+import useridContext from "../usercontext.tsx";
+
+import { useContext } from "react";
+
 let predicate=function(rating_target,rating){
+    let userid=useContext(useridContext);
     if(rating_target <= rating && rating<(rating_target+1)){
         return true;
     };
 }
 export default function ProductRate({reviews}){
-    console.log("---l---");
-    console.log(reviews)
-    console.log("---l---");
+    const userid=useContext(useridContext);
+   let myreview=reviews.filter(element=>element.userid===userid);
+        myreview=myreview[0];
+        
+   console.log("xxxxxxxxxxxxxxxx");
+   console.log(myreview);
+   console.log("xxxxxxxxxxxxxxxx");
+
+
     let total_revs=reviews.length;
     let five=reviews.filter((obj)=>{
           let  rating=parseFloat(obj.rating);
@@ -35,7 +47,7 @@ export default function ProductRate({reviews}){
         return predicate(2,rating);
     });
     console.log("\\\\\\\\")
-    console.log(five);
+    console.log(reviews);
     console.log(total_revs)
     let ttlrating=reviews.reduce((acc,currentobj)=>{
         
@@ -90,7 +102,7 @@ export default function ProductRate({reviews}){
             </div>
         </div>
        
-        <AddRate/>
+        <AddRate review={myreview} />
         
         </div>
     )

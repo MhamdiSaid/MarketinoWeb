@@ -23,9 +23,28 @@
     align-items: center;
 }
 .add-rate textarea{
-    margin-top: 1rem;
+    
     width: 23rem;
     border-radius: 0.6rem;
     background-color: #cef0ff;
     height: 5rem;
+}
+.add-rating{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+
+}
+.add-rating input{
+    width:2.3rem;
+    border: 0.08rem solid black;
+    border-radius: 0.8rem;;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-right: 0.2rem;
+    
 }
