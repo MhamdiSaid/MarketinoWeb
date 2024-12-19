@@ -29,7 +29,7 @@ import { useEffect } from "react";
     )
 }
 
-export default  function RatingBar({ratingprop,width,margin}:{ratingprop:number,width:number,margin:number}){
+export default  function RatingBar({ratingprop,width,margin,uniquenumber}:{ratingprop:number,width:number,margin:number,uniquenumber:number}){
         let rating=ratingprop;
         console.log("_____________");
         console.log(typeof rating)
@@ -41,7 +41,7 @@ export default  function RatingBar({ratingprop,width,margin}:{ratingprop:number,
             
             if(rating >= 1){
               
-                iconArray.push(<Star id={`${i}`} key={rating} percent={1} margin={margin}/>)
+                iconArray.push(<Star id={`${i+uniquenumber}`} key={rating} percent={1} margin={margin}/>)
             }
             else if(rating>0){
                if(rating===0.25){
@@ -50,11 +50,11 @@ export default  function RatingBar({ratingprop,width,margin}:{ratingprop:number,
             else if(rating===0.75){
                 rating=0.6;
                }
-                iconArray.push(<Star id={`${i}`} key={rating} percent={rating} margin={margin}/>);
+                iconArray.push(<Star id={`${i+uniquenumber}`} key={rating} percent={rating} margin={margin}/>);
             }
             else{
              
-                iconArray.push(<Star id={`${i}`} key={rating} percent={0.0} margin={margin}/>);
+                iconArray.push(<Star id={`${i+uniquenumber}`} key={rating} percent={0.0} margin={margin}/>);
 
             }
             rating--;

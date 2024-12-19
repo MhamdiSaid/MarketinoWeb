@@ -13,7 +13,7 @@ let predicate=function(rating_target,rating){
         return true;
     };
 }
-export default function ProductRate({reviews}){
+export default function ProductRate({reviews,setProduct}){
     const userid=useContext(useridContext);
    let myreview=reviews.filter(element=>element.userid===userid);
         myreview=myreview[0];
@@ -60,7 +60,7 @@ export default function ProductRate({reviews}){
         <div className="product-rate-root">
         <div className="product-rate">
             <div className="rating-bar-product-rate">
-            <RatingBar ratingprop={average_rating} width={6} margin={0}/>
+            <RatingBar uniquenumber={5} ratingprop={average_rating} width={6} margin={0}/>
             <p>{average_rating} of 5</p>
             </div>
             <p>{total_revs} global ratings</p>
@@ -102,7 +102,7 @@ export default function ProductRate({reviews}){
             </div>
         </div>
        
-        <AddRate review={myreview} />
+        <AddRate review={myreview} setProduct={setProduct} />
         
         </div>
     )

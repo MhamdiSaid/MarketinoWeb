@@ -8,9 +8,8 @@ import ProductRate from "./components/productrate/productrate";
 import Reviews from "./components/reviews/reviews";
 import productContext from "./components/productcontext";
 import userContext from "./components/usercontext";
-import { useImmer } from "use-immer";
 function App() {
-    const [product,setProduct]=useImmer(null);
+    const [product,setProduct]=useState(null);
   
     useEffect(()=>{
       
@@ -42,7 +41,7 @@ function App() {
       <productContext.Provider value={product && product.productid} >
       {product && <ProductDescription product={product}/>}
       
-      {product && <ProductRate reviews={[...product.reviews]} setProduct={setProduct}/>}
+      {product && <ProductRate reviews={[...product.reviews]}/>}
 
       {product && <Reviews product={product}/>}
      </productContext.Provider>
