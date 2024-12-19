@@ -1,8 +1,29 @@
 import { useEffect, useState } from "react";
 import "./productDescription.css";
+import { useImmer } from "use-immer";
 
+function handleShopNow(e){
+
+    
+    
+}
 export default function ProductDescription({product}){
+        let [variants,setVariants]=useImmer(null);
 
+        if(!variants){
+            setVariants(product.variants.map((variant)=>{
+                if(variant.input_type==="checkbox"){
+                    return  {...variant,value:[]}
+                }
+                return {...variant,value:""};
+               
+            }));
+            return;
+        }
+        console.log(variants);
+        console.log("sxxxxxxZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZxssssssssss");
+
+    
 /*
     useEffect(()=>{
         fetch(url,{
@@ -83,9 +104,10 @@ export default function ProductDescription({product}){
                     </div>
                     <div className="variants-caracteristics">
                     <div className="variants">
-                    {product.variants.map((variant)=>{
-                       // variant.valuespattern="said|mhamdi|iliaas|hamid";
-                        //variant.input_type="radio";
+                    {variants.map((variant,index)=>{
+                        console.log(variant)
+                        console.log("############")
+                      
                         console.log("kk")
                         if(variant.input_type==="text"){
                             return(
@@ -93,7 +115,15 @@ export default function ProductDescription({product}){
                                 <p className="variants-section">{variant.section}</p>
 
                                 <div className="mb-3 input-text">
-                                <input type="text" name={variant.section}  className="form-control" id="formGroupExampleInput" placeholder="you answer here"/>
+                                <input type="text" name={variant.section}
+                                value={variant.value}
+                                onChange={(e)=>{
+                                    setVariants((proxy)=>{
+                                        proxy[index].value=e.target.value;
+                                        
+                                    });
+                                }}
+                                className="form-control" id="formGroupExampleInput" placeholder="you answer here"/>
                                 </div>
                                 </>
                             )
@@ -110,7 +140,21 @@ export default function ProductDescription({product}){
                                     return(
                                         <>
                                         <div className="form-check">
-                                        <input className="form-check-input" name={variant.section} value={obj} type="checkbox"  id="flexCheckDefault"/>
+                                        <input className="form-check-input" name={variant.section} 
+                                        onChange={(e)=>{
+                                            setVariants((proxy)=>{
+                                                if(e.target.checked){
+                                                proxy[index].value.push(e.target.value);
+                                                }else{
+                                                    let indexx=proxy[index].value.indexOf(e.target.value);
+                                                    if(index!==-1)
+                                                        proxy[index].value.splice(indexx,1);
+                                                }
+                                                
+                                            });
+                                        }}
+                                        value={obj}
+                                         type="checkbox"  id="flexCheckDefault"/>
                                         <label className="form-check-label" htmlFor="flexCheckDefault">
                                             {obj}
                                         </label>
@@ -125,7 +169,7 @@ export default function ProductDescription({product}){
                             );
 
                         }else if(variant.input_type==="radio"){
-                            console.log("llllllllllllll");
+                            
                             let radioFields=variant.valuespattern.split("|");
                             console.log(radioFields)
                             
@@ -136,7 +180,14 @@ export default function ProductDescription({product}){
                                         return(
                                            <>
                                             <div className="form-check">
-                                            <input className="form-check-input" name={variant.section}  value={obj} type="radio"   id="flexRadioDefault1"/>
+                                            <input className="form-check-input" name={variant.section}  value={obj}
+                                            onChange={(e)=>{
+                                                setVariants((proxy)=>{
+                                                    proxy[index].value=e.target.value;
+                                                    
+                                                });
+                                            }}
+                                            type="radio"   id="flexRadioDefault1"/>
                                             <label className="form-check-label">
                                                 {obj}
                                             </label>
@@ -150,25 +201,60 @@ export default function ProductDescription({product}){
                             );
                             
                         }else if(variant.input_type==="file"){
-                            <>
+
+                            return (<>
                                 <p className="variants-section">{variant.section}</p>
                                 <div className="input-group mb-3">
-                                <input type="file" name={variant.section}  className=" file-upload" id="inputGroupFile01"/>
+                                <input type="file" name={variant.section}
+                                onChange={(e)=>{
+
+
+                                    // if there's no selected file then just log a simple message
+
+
+                                    if(e.target.files.length==0){
+                                            console.log("no file selected");
+                                    }
+                                    else{
+                                        // backend handling missing coming soon
+                                        // update the state variabe and set the value of the current variant 
+                                        
+                                        let file=e.target.files[0];
+
+                                        setVariants((proxy)=>{
+                                            proxy[index].value=file;
+                                        });
+                                    }
+                                }}      
+                                className=" file-upload" id="inputGroupFile01"/>
                                 </div>
                             </>
-                            
-                        }else if(variant.input_type==="textarea"){
+                            );
+
+                        }// text area is not yet supported...coming soon
+                        else if(variant.input_type==="textarea"){
                             return null;
                             
                         }else if(variant.input_type==="select"){
                             let regexArray=variant.valuespattern.split("|");
-                            
+                            if(variant.value===""){
+                                setVariants((proxy)=>{
+                                    proxy[index].value=regexArray[0];
+                                });
+                            }
                             return(
 
                                
                                 <>
                                     <p className="variants-section">{variant.section}</p>
-                                    <select className="form-select" name={variant.section}  aria-label="Default select example">
+                                    <select className="form-select" name={variant.section}
+                                    value={variant.value==""?regexArray[0]:variant.value}
+                                    onChange={(e)=>{
+                                        setVariants((proxy)=>{
+                                            proxy[index].value=e.target.value;
+                                        });
+                                    }}
+                                    aria-label="Default select example">
                                     {regexArray.map((opt:string)=>{
                                         return(
                                             <>
@@ -213,7 +299,9 @@ export default function ProductDescription({product}){
                     <div className="productdetails footer">
                         <p className="total-count">$93838</p>
                         <div className="buttons">
-                            <div className="shop-now">
+                            <div className="shop-now" onClick={(e)=>{
+                                handleShopNow(e);
+                            }}>
                                 <p>Shop Now</p>
                             </div>
                             <div className="add-to-cart">

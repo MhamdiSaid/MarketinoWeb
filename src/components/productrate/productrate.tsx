@@ -44,7 +44,7 @@ export default function ProductRate({reviews,setProduct}){
     });
     let one=reviews.filter((obj)=>{
         let  rating=parseFloat(obj.rating);
-        return predicate(2,rating);
+        return predicate(1,rating);
     });
     console.log("\\\\\\\\")
     console.log(reviews);

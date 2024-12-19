@@ -215,7 +215,7 @@ export default function AddRate({review,setProduct}:{review:myreviewType}){
         <div className="add-rate">
             <RatingBar key={myreview.rating} uniquenumber={0} width={15} ratingprop= {myreview.rating} margin={0.9}/>
             <div className="add-rating">
-              <input type="text" value={myreview ==null || myreview.rating} onChange={(e)=>{
+              <input type="text" value={myreview==null?0: myreview.rating} onChange={(e)=>{
                if(e.target.value===""){
                 setMyReview({...myreview,rating:e.target.value});
 
@@ -262,12 +262,13 @@ export default function AddRate({review,setProduct}:{review:myreviewType}){
                 UpdateReviewHandler();
                 if(isupdate){
                   setProduct(proxy=>{
-                    proxy.reviews.findIndex((currentValue,index,)=>{
+                    let index=proxy.reviews.findIndex((currentValue,index,)=>{
                       if(currentValue.userid===3){
                         return true;
                       }
                       else return false;
-                    })
+                    });
+                    proxy.reviews[index]=myreview;
                   });
                 }
               }
