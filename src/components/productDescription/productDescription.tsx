@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import "./productDescription.css";
 import { useImmer } from "use-immer";
 
-function handleShopNow(e){
 
-    
-    
-}
 export default function ProductDescription({product}){
         let [variants,setVariants]=useImmer(null);
 
@@ -20,8 +16,92 @@ export default function ProductDescription({product}){
             }));
             return;
         }
-        console.log(variants);
-        console.log("sxxxxxxZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZxssssssssss");
+       
+
+        // handling the order event:
+        function handleShopNow(e,isOrder){
+           
+            let url=`http://localhost:3001/stores/helloword/products/abdedrahimczaddssddcccssax`;
+            url+=isOrder?"/order":"/cart";
+            //create a form data object to construct a POST request body:
+            let formdata=new FormData();
+            //return if the varible is null:
+            if(!variants)return;
+
+            //iterates over the variants,and for each epecific variant append a key-value
+            // pair to the variants propery of the  formdata (request body)::
+            // key:the variant type 
+            // value: the variant user value
+            variants.forEach((value)=>{
+                formdata.append(`variants[${value["section"]}]`,value["value"]);
+            });
+            formdata.append("quantity","19");
+            console.log(formdata);
+            console.log("^^^^ form data");
+
+            fetch(url,{
+                headers:{
+                    "Authorization":"Bearer cea02094ade92909e0920d91d59e16ffa1ed675d581275fe56250d4830c9ed5910fab49d1cccc99329e53ae1559595fff7c23370e9580c7f59587853"
+                  },
+                  method:"POST",
+                  body:formdata
+            })
+            .then((res)=>{
+                console.log(res.status);
+                //display a Toast:
+                
+                // select The body element:
+
+                let body=document.querySelector(".toasts");
+                // construct a dom tree from a toast  string:
+
+                let toast=`<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="display:block;position:relative;bottom:0rem;background-color: #08ff0a;">
+                                        <div class="toast-header">
+                                            <img src="..." class="rounded me-2" alt="...">
+                                            <strong class="me-auto">Marketino</strong>
+                                            <small>just now</small>
+                                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                        </div>
+                                        <div class="toast-body" style="font-weight: bolder;">
+                                            Hello, world! This is a toast message.
+                                        </div>
+                                        </div>`;
+                // we will use DOMParser API to parse the string into a DOM tree:
+                const parser=new DOMParser();
+                const doc=parser.parseFromString(toast,"text/html");
+                let toastElement=doc.querySelector(".toast");
+
+                // add ability of removing the toast:
+                let closeButton=doc.querySelector("button");
+                closeButton?.addEventListener("click",(e)=>{
+                    toastElement?.remove();
+                });
+
+                //check the response status and show the suitable toast message
+                if(res.status===200){
+                    // the order placed sucessufuly:
+                    // change the toast message to assign to the user that the order is placed
+                    // sucessfully
+                    toastElement.querySelector(".toast-body").innerHTML=isOrder?"the order placed sucessufuly ":"the order added to the cart";
+                    
+                    body.append(toastElement);
+
+                }else{
+                    // something wrong,data format maybe incorrect
+                    let toastbody=toastElement.querySelector(".toast-body");
+
+                    toastbody.innerHTML="Something Wrong!check the entered inputs";
+                    toastbody.style.color="white";
+                    toastElement.style.backgroundColor="red";
+
+                    body.append(toastElement);
+                }
+                return res.json();
+            }).then((json)=>{
+                console.log(json);
+            });
+    
+        }
 
     
 /*
@@ -304,7 +384,10 @@ export default function ProductDescription({product}){
                             }}>
                                 <p>Shop Now</p>
                             </div>
-                            <div className="add-to-cart">
+                            <div className="add-to-cart" onClick={(e)=>{
+                                handleShopNow(e,false);
+                            }
+                            }>
                                 <p>Add TO Cart</p>
                             </div>
                         </div>
