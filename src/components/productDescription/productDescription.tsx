@@ -2,42 +2,114 @@ import { useEffect, useState } from "react";
 import "./productDescription.css";
 import { useImmer } from "use-immer";
 
+/** 
+ *  ProductDescrirption component is responsible about display the product informations
+ * - product pictures
+ * - the product name
+ * - the product description
+ * - the price
+ * - product variants (the caracteristics of the product that the client can make choice between them)
+ * - the fixed caracteristics
+ * - the total price
+*/
+// the product object type :
 
-export default function ProductDescription({product}){
-        let [variants,setVariants]=useImmer(null);
+type caracteristicsType={type:string,value:string};
 
+// the variant object type
+type variantType={
+input_type:string ,
+section: string,
+valuespattern:string,
+variant_id:number 
+}
+// the variants state variable type:
+interface  variantState extends variantType  {value:string[]|string};
+// the product object type
+
+type productType={
+    caracteristics:caracteristicsType[],
+    contact_type:string,
+    description:string,
+    discount: number,
+    price: number,
+    productid: number,
+    productname: string,
+    reviews:object[],
+    scarcity: string,
+    shipping_cost: number,
+    stock_quantity: number,
+    stock_status: string,
+    storename: string,
+    sub_path:string,
+    variants:variantState[]
+};
+
+// atoast string :
+
+let toast=`<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="display:block;position:relative;bottom:0rem;background-color: #08ff0a;">
+<div class="toast-header">
+    <img src="..." class="rounded me-2" alt="...">
+    <strong class="me-auto">Marketino</strong>
+    <small>just now</small>
+    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+</div>
+<div class="toast-body" style="font-weight: bolder;">
+    Hello, world! This is a toast message.
+</div>
+</div>`;
+// the component definition: 
+
+export default function ProductDescription({product}:{product:productType}){
+       
+        // this state variable will hold the variants that the client choosed to be used when sending
+        // the order/add_to_cart request to the server
+        let [variants,setVariants]=useImmer<variantState[]|null>(null);
+
+        // if the variants varianle is not set yet then intialize it with the value
+        //  "" OR [] (for checkboxes)
         if(!variants){
-            setVariants(product.variants.map((variant)=>{
+
+            // update the state:
+            setVariants(product.variants.map((variant:variantState)=>{
+
+                // if the input type is a checkbox then assign the value property an array (multi selections)
                 if(variant.input_type==="checkbox"){
-                    return  {...variant,value:[]}
+                    return  {...variant,value:[]};
                 }
                 return {...variant,value:""};
                
             }));
+            // return do not continue rendering(executing the function);
             return;
+            //BUG
         }
        
 
         // handling the order event:
-        function handleShopNow(e,isOrder){
+        function handleShopNow(e:object,isOrder:boolean){
            
+            // the order endpoint:
             let url=`http://localhost:3001/stores/helloword/products/abdedrahimczaddssddcccssax`;
             url+=isOrder?"/order":"/cart";
+            
             //create a form data object to construct a POST request body:
             let formdata=new FormData();
             //return if the varible is null:
             if(!variants)return;
 
-            //iterates over the variants,and for each epecific variant append a key-value
+            //iterates over the variants,and for each specific variant append a key-value
             // pair to the variants propery of the  formdata (request body)::
             // key:the variant type 
             // value: the variant user value
             variants.forEach((value)=>{
+                
                 formdata.append(`variants[${value["section"]}]`,value["value"]);
             });
+            
+            // apend the quantity of the product to order to the request body:
             formdata.append("quantity","19");
-            console.log(formdata);
-            console.log("^^^^ form data");
+            
 
             fetch(url,{
                 headers:{
@@ -47,29 +119,17 @@ export default function ProductDescription({product}){
                   body:formdata
             })
             .then((res)=>{
-                console.log(res.status);
-                //display a Toast:
+              // display a toast to show to the client the result of the order:
                 
                 // select The body element:
 
                 let body=document.querySelector(".toasts");
+                if(body==null)return;
                 // construct a dom tree from a toast  string:
-
-                let toast=`<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="display:block;position:relative;bottom:0rem;background-color: #08ff0a;">
-                                        <div class="toast-header">
-                                            <img src="..." class="rounded me-2" alt="...">
-                                            <strong class="me-auto">Marketino</strong>
-                                            <small>just now</small>
-                                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                                        </div>
-                                        <div class="toast-body" style="font-weight: bolder;">
-                                            Hello, world! This is a toast message.
-                                        </div>
-                                        </div>`;
                 // we will use DOMParser API to parse the string into a DOM tree:
                 const parser=new DOMParser();
                 const doc=parser.parseFromString(toast,"text/html");
-                let toastElement=doc.querySelector(".toast");
+                let toastElement:Element & {style:{backgroundColor:string}}|null=doc.querySelector(".toast");
 
                 // add ability of removing the toast:
                 let closeButton=doc.querySelector("button");
@@ -82,14 +142,18 @@ export default function ProductDescription({product}){
                     // the order placed sucessufuly:
                     // change the toast message to assign to the user that the order is placed
                     // sucessfully
-                    toastElement.querySelector(".toast-body").innerHTML=isOrder?"the order placed sucessufuly ":"the order added to the cart";
+                    if(toastElement==null)return;
+                   let toastbody= toastElement.querySelector(".toast-body");
+                   if(toastbody==null)return;
+                   toastbody.innerHTML=isOrder?"the order placed sucessufuly ":"the order added to the cart";
                     
                     body.append(toastElement);
 
                 }else{
                     // something wrong,data format maybe incorrect
-                    let toastbody=toastElement.querySelector(".toast-body");
-
+                    if(toastElement==null)return;
+                    let toastbody:Element & {style:{color:string}}|null=toastElement.querySelector(".toast-body");
+                    if(toastbody==null)return;
                     toastbody.innerHTML="Something Wrong!check the entered inputs";
                     toastbody.style.color="white";
                     toastElement.style.backgroundColor="red";
@@ -98,6 +162,7 @@ export default function ProductDescription({product}){
                 }
                 return res.json();
             }).then((json)=>{
+                // show the message for the curios clients
                 console.log(json);
             });
     
@@ -119,7 +184,11 @@ export default function ProductDescription({product}){
             console.log(json);
         });
     },[]);*/
-    let images_path=`http://localhost:3001/images/stores/${"helloword"}/products/${product.productid}/`
+
+    // the endpoint for getting the product pictures:
+    let images_path=`http://localhost:3001/images/stores/${"helloword"}/products/${product.productid}/`;
+
+    // the jsx to return:
     return(
 
 
@@ -185,11 +254,16 @@ export default function ProductDescription({product}){
                     <div className="variants-caracteristics">
                     <div className="variants">
                     {variants.map((variant,index)=>{
-                        console.log(variant)
-                        console.log("############")
-                      
-                        console.log("kk")
+
+                       // check the input type of each variant and behaves depend on that:
+
                         if(variant.input_type==="text"){
+
+                            // if the input_type is text then return an input  element of type="text"
+                            // where the title of the variant will be the section
+                            // and the value will be the value prop of the variants state variable
+                            // and an OnChange event listener to update the value of the specific variant
+                            // when the user change the value
                             return(
                                 <>
                                 <p className="variants-section">{variant.section}</p>
@@ -198,7 +272,9 @@ export default function ProductDescription({product}){
                                 <input type="text" name={variant.section}
                                 value={variant.value}
                                 onChange={(e)=>{
+                                    
                                     setVariants((proxy)=>{
+                                        if(proxy==null)return;
                                         proxy[index].value=e.target.value;
                                         
                                     });
@@ -210,7 +286,13 @@ export default function ProductDescription({product}){
 
                         }else if(variant.input_type==="checkbox"){
                             
-                            let checkfields=variant.valuespattern.split("|");
+                            // split the regular expression into an array that will be used to construct
+                            // a list of checkboxes inputs
+                             // where the title of the variant will be the section
+                            // and the value will be the value prop of the variants state variable
+                            // and an OnChange event listener to update the value of the specific variant
+                            // when the user change the value
+                            let checkfields:string[]=variant.valuespattern.split("|");
                             return(
                             <>
                                 <p className="variants-section">{variant.section}</p>
@@ -223,6 +305,7 @@ export default function ProductDescription({product}){
                                         <input className="form-check-input" name={variant.section} 
                                         onChange={(e)=>{
                                             setVariants((proxy)=>{
+                                                if(proxy==null)return;
                                                 if(e.target.checked){
                                                 proxy[index].value.push(e.target.value);
                                                 }else{
@@ -366,7 +449,7 @@ export default function ProductDescription({product}){
                     </div>
                     <div className="caracteristics">
                         <h6>Caracteristics</h6>
-                       {product.caracteristics.map((caracteristic:{type:string,value:string})=>{
+                       {product.caracteristics.map((caracteristic:caracteristicsType)=>{
                         return <p><span>{caracteristic.type} :</span> {caracteristic.value}</p>
                        })}
                         
@@ -380,7 +463,7 @@ export default function ProductDescription({product}){
                         <p className="total-count">$93838</p>
                         <div className="buttons">
                             <div className="shop-now" onClick={(e)=>{
-                                handleShopNow(e);
+                                handleShopNow(e,true);
                             }}>
                                 <p>Shop Now</p>
                             </div>
