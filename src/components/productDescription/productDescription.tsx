@@ -65,6 +65,8 @@ export default function ProductDescription({product}:{product:productType}){
         // this state variable will hold the variants that the client choosed to be used when sending
         // the order/add_to_cart request to the server
         let [variants,setVariants]=useImmer<variantState[]|null>(null);
+        // set the quantity that the product want to 1 by default:
+        const [quantity,setQuantity]=useState<number>(1);
 
         // if the variants varianle is not set yet then intialize it with the value
         //  "" OR [] (for checkboxes)
@@ -460,7 +462,16 @@ export default function ProductDescription({product}:{product:productType}){
 
                     </div>
                     <div className="productdetails footer">
-                        <p className="total-count">$93838</p>
+                        <div className="total-price-quantity">
+                        <p className="total-count">{quantity*product.price}</p>
+                        <select onChange={(e)=>{
+                            setQuantity(parseInt(e.target.value));
+                        }}>
+                            {(new Array(20)).fill(1).map((elmt,index)=>{
+                                return <option key={index+1} value={index+1}>{index+1}</option>
+                            })}
+                        </select>
+                        </div>
                         <div className="buttons">
                             <div className="shop-now" onClick={(e)=>{
                                 handleShopNow(e,true);

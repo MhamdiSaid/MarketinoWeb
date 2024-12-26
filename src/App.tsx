@@ -11,6 +11,7 @@ import userContext from "./components/usercontext";
 import { useImmer } from "use-immer";
 function App() {
     const [product,setProduct]=useImmer(null);
+    // make the quantity that the user want is 1 by defaut 
   
     useEffect(()=>{
       

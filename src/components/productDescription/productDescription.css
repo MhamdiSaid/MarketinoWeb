@@ -61,8 +61,7 @@
   }
   .product-description   .productdetails{
         width:100%;
-        position:absolute;
-        bottom:0.8rem;
+        
     }
     .product-description .buttons{
         height:2.7rem;
@@ -188,3 +187,15 @@
 .caracteristics h6{
     font-weight: bolder;
 }
+
+.total-price-quantity{
+    display: flex;
+    height: 3rem;
+    align-items: center;
+}
+
+.total-price-quantity select{
+    margin-left: 1.5rem;
+    width: 6rem;
+    background: #b1d8e9;
+  }
