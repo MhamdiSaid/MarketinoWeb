@@ -2,10 +2,24 @@ import Icon from "../icon/icon.tsx";
 import Logo from "../Logo/logo.tsx";
 import SearchBar  from "../searchbar/searchbar.tsx";
 import "./header.css"
-
+import ReactDOM from "react-dom/client";
+import Orders from "../Orders/orders.tsx";
 export default function Header(){
 
 
+    function showOrders(e:object,isOrder:boolean){
+        document.body.style.overflow = "hidden";
+        let root_div=document.querySelector(".fixedpos");
+        if(root_div!==null){
+
+            let root =ReactDOM.createRoot(root_div);
+            root.render(<Orders/>);
+        }else{
+            console.log("error root ==null");
+        }
+
+
+    }
 
 
     return(
@@ -17,7 +31,11 @@ export default function Header(){
                 <SearchBar  widthValue={15} />
                 <div className="orders-card">
                     
-                    <p>Orders</p>
+                    <p onClick={
+                        (e)=>{
+                            showOrders(e,false);
+                        }
+                    }>Orders</p>
                     <div className="dividor"></div>
                     <Icon width={2} avatar="card"></Icon>
                     <p className="card-name">Card</p>

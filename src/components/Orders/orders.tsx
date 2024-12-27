@@ -18,8 +18,93 @@ export default function Orders(){
             });
         },[]);
         if(orders==null)return;
+
+        // remove modal handler:
+        let removeModal=(e)=>{
+            let modal=document.querySelector(".modal");
+            if(modal){
+                    modal.remove();
+            }else{
+                console.log("modal doent exist");
+            }
+        }
+
     return (
-        <>
+       <>
+                
+            <div className="modal fade order-div" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-scrollable">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h1 className="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                    <button type="button" 
+                    onClick={(e)=>{
+                        removeModal(e);
+                    }
+                    }
+                    className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                <table  >
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Store</th>
+                            <th>order date</th>
+                            <th>quantity</th>
+                            <th>status</th>
+                            <th>Edit the order</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                    {
+                    // return a row for each order 
+                    orders.map((order,index)=>{
+                        let date=new Date(order.order_date);
+                        return(
+                            <>
+                            <tr>
+                                <td>{order.productname}</td>
+                                <td>{order.storename}</td>
+                                <td>{date.getDay()},{date.getMonth()},{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
+                                <td>{order.quantity}</td>
+                                <td>{order.shipping_status}</td>
+                                <td>Edit the order</td>
+                            </tr>
+                            </>
+                        )
+                    })}
+                        
+                    </tbody>
+
+
+                    </table>
+                </div>
+                <div className="modal-footer">
+                    <button type="button" 
+                    onClick={(e)=>{
+                        removeModal(e);
+                    }
+                    }
+                    className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    
+                </div>
+                </div>
+            </div>
+            </div>
+       
+       </>
+    )
+}
+
+/*
+
+ <>
+        <div className="order-root">
+        <div className="order-div  modal-dialog modal-dialog-scrollable">
+            <div className="exit-div">
+            </div>
+        <div className="table-div  modal-dialog modal-dialog-scrollable">
         <table  >
         <thead>
             <tr>
@@ -54,7 +139,9 @@ export default function Orders(){
 
 
         </table>
-        
+        </div>
+        </div>
+        </div>
         </>
-    )
-}
+
+*/
