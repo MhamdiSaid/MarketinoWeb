@@ -3,7 +3,9 @@ import {useEffect,useState} from "react";
 
 // return a table of theuser orders:
 
-export default function Orders(){
+export default function Orders({setShowOrders}:{setShowOrders:(arg:boolean)=>void}){
+    console.log(setShowOrders)
+    console.log("_________zzzzzzzzzzzz________")
     let [orders,setOrders]=useState(null);
         useEffect(()=>{
             let url="http://localhost:3001/order";
@@ -23,7 +25,13 @@ export default function Orders(){
         let removeModal=(e)=>{
             let modal=document.querySelector(".modal");
             if(modal){
+                console.log(setShowOrders)
+                console.log("_________________")
+                setShowOrders(false);
+
                     modal.remove();
+                    
+
             }else{
                 console.log("modal doent exist");
             }
@@ -69,7 +77,7 @@ export default function Orders(){
                                 <td>{date.getDay()},{date.getMonth()},{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                 <td>{order.quantity}</td>
                                 <td>{order.shipping_status}</td>
-                                <td>Edit the order</td>
+                                <td>Cancel the Order</td>
                             </tr>
                             </>
                         )

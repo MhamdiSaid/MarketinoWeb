@@ -1,106 +1,157 @@
 import "../login/login.css";
 import "./register.css";
+import {useState,useReducer} from "react";
 
+
+// this component is responsible for registering to the website:
 
 export default function Register(){
    
-setTimeout(()=>{
-    let submitbutton:any=document.querySelector("input[type='submit']");
-    let email:any=document.querySelector("input[name='email']");
-    let password:any=document.querySelector("input[name='password']");
-    let firstname:any=document.querySelector("input[name='firstname']");
-    let code:any=document.querySelector("input[name='code']");
-
-    let lastname:any=document.querySelector("input[name='lastname']");
-    let next:any=document.querySelector(".next");
-    let finishPercent:any=document.querySelector(".finish-percent>div");
-    let back:any=document.querySelector(".back-svg");
-    var firstparagraph:any=document.querySelector(".back-text>p:nth-child(1)");
-    var scndparagraph:any=document.querySelector(".back-text>p:nth-child(2)");
-if(submitbutton==null || password==null || code==null || back==null )return;
-
-submitbutton.addEventListener("click",(event)=>{
-    event.preventDefault();
-    password.style.display="none";
-    code.style.display="block";
-    back.parentElement.innerHTML="";
-})
-
+    // track if the Sbumit button is clicked 
+    const [isSubmitted,setSubmit]=useState(false);
+    // track the register steps completed
+    const[step,setStep]=useState(0);
+    // save the the user input informations:
+    const [userInputs,SetUserInputs]=useState<{[index:string]:string}>({email:"",password:"","firstname":"",lastname:"",country:"Morocco",city:"Oujda",adresse:"",confirmPassword:""});
     
+    // this variable verify the user inputs of the current step if all the inputs
+    // contain valid data or no
+    let allowNext:boolean=false;
+    //here the email,firstname,lastname values need to be validated to allow going to the next step => in the step 0
+    if(step===0)
+     allowNext=userInputs.email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)!=null && userInputs.firstname!="" &&  userInputs.lastname!="";
+    
+    // here the addresse need to be validated to allow going to the next step=> step 1
+    else if(step===1)
+        allowNext= userInputs.adresse!="";
 
-    let i=0;
-    back.addEventListener("click",()=>{
-        i--;
-        finishPercent.style.inlineSize=i*33+"%";
-        if(i===0){
+    //here password need to be confirmed to allow going to the next step
+    else if(step===2)
+        allowNext=userInputs.password===userInputs.confirmPassword;
+
+
+    // the sumbit button 
+    let submitInput=(<input type="submit" value="Log In" onClick={e=>{
+        e.preventDefault();
+        setSubmit(true);
+
+    }}/>);
+    // the password inputs
+    let passwordButton=( <><input type="password" name="password" placeholder="Enter your password" required 
+        value={userInputs.password} onChange={(e)=>{SetUserInputs({...userInputs,password:e.target.value})}}
+    />
+    <input type="password" name="confirmPassword" placeholder="Confirm your password" required 
+        className={userInputs.confirmPassword===userInputs.password?"correct":"error"}     value={userInputs.confirmPassword} onChange={(e)=>{SetUserInputs({...userInputs,confirmPassword:e.target.value})}}
+    />
+    </>);
+    
+    // the code inputs:
+    let codeInput=( <input key="code" type="text" placeholder="XXX-XXX" name="code"/>);
+
+    //this block of code is responsible for going back whener the situation allow doing that 
+    let backHtml=( <><div className="back-svg" onClick={(e)=>{
+        if(step===0 || step===3)return;
+        else setStep(step-1);
+    }}>
+                        <svg data-encore-id="icon" role="img" aria-hidden="true" viewBox="0 0 24 24" className="Svg-sc-ytk21e-0 dDkLMK"><path d="M15.957 2.793a1 1 0 0 1 0 1.414L8.164 12l7.793 7.793a1 1 0 1 1-1.414 1.414L5.336 12l9.207-9.207a1 1 0 0 1 1.414 0z"></path></svg>
+                        </div>
+                        <div className="back-text">
+                            <p>{step===0?"Step 1 Of 3":step===1?"Step 2 Of 3":"Step 3 Of 3"}</p>
+                            <p>{step===0?"Setting basic infos":step===1?"Setting location":"Setting password"}</p>
+                        </div></>);
+
+    // this variable hold the JSX of the inputs (all the inputs are stored in this variable
+    // depending on the step)
+    let content=null;
+    
+    //the 1st step content will hold the email/firstname/lastname inputs
+    if(step===0){
+        content=(<>
+         <input type="text" name="email" placeholder="Enter your Email" required
+         value={userInputs.email} onChange={(e)=>{
+
+            SetUserInputs({...userInputs,email:e.target.value})
            
-            
-            firstparagraph.innerHTML="Step 1 Of 3";
-            scndparagraph.innerHTML="Setting Email";
-            firstname.style.display="none";
-            lastname.style.display="none";
-            email.style.display="block";
+            }}
+         />
+                    <div className="name" >
+                        <input type="text" placeholder="First Name" name="firstname" required
+                            value={userInputs.firstname} onChange={(e)=>{
+                                SetUserInputs({...userInputs,firstname:e.target.value});
+                               
+                                }}
+                        />
+                        <input type="text" placeholder="Last Name" name="lastname" required
+                            value={userInputs.lastname} onChange={(e)=>{
+                                SetUserInputs({...userInputs,lastname:e.target.value})
+                               
+                               }}
+                        
+                        />
+
+                    </div >
+        </>)
+    }
+    //the second step the content variable will  hold the country/city/addresse inputs
+    else if(step===1){
+        let countries=["Morocco","Algeria","USA","France","Europe"];
+        let cities:{[index:string]:string[]}={"Morocco":["Tanger","Oujda","Fes","Meknes"],"Algeria":["alg","a","b"]};
+        content=(<>
+          <div className="name" >
+                           
+                           <select name={"country"}
+                value={userInputs.country} onChange={(e)=>{SetUserInputs({...userInputs,country:e.target.value})}}
+
+                           >{countries.map((elmt)=><option key={elmt} value={elmt}>{elmt}</option>)}
+        
+                           </select>
+                            <select 
+               value={userInputs.city} onChange={(e)=>{SetUserInputs({...userInputs,city:e.target.value})}}
+
+                            name={"city"}>{cities[userInputs.country].map((elmt:string)=><option key={elmt} value={elmt}>{elmt}</option>)}
+                           
+                           </select>
+   
+                       </div >
+            <input type="text" name="adresse" placeholder="Enter your adresse" required
+            value={userInputs.adresse} onChange={(e)=>{SetUserInputs({...userInputs,adresse:e.target.value})}}
+
+            />
+                     
+           </>)
+    }
+    // the 3d step will be responsible for filling the password
+    else if(step==2){
+        content=(<>
+            {passwordButton}
+        </>)
+        
+    } 
+    // the last step will be responsible for confirming the verfication code
+    else if(step==3){
+        let url="http://localhost:3001/account";
+        let formdata=new FormData();
+        for(let input in userInputs){
+            formdata.append(input,userInputs[input]);
+        }
        
-        }
-        else if(i===1){
-          
+        fetch(url,{
+            method:"POST",
+            body:formdata
+        }).then(res=>{
+            if(res.status===200){
+                console.log("success");
+            }
+            else{
+                console.log("failed");
+            }
+            return res.json();
+        }).then(json=>console.log(json));
 
-            firstparagraph.innerHTML="Step 2 Of 3";
-            scndparagraph.innerHTML="Setting names";
-            password.style.display="none";
-            next.style.display="block";
-            submitbutton.style.display="none";
-            firstname.style.display="block";
-            lastname.style.display="block";
-            
-        }
-        else if(i===2){
-            firstparagraph.innerHTML="Step 3 Of 3";
-            scndparagraph.innerHTML="Setting password";
-            code.style.display="none";
-            password.style.display="block";
-          
-
-
-        }
-    })
-    next.addEventListener("click",()=>{
-        i++;
-        finishPercent.style.inlineSize=i*33+"%";
-        if(i===1){
-            firstparagraph.innerHTML="Step 2 Of 3";
-            scndparagraph.innerHTML="Setting Names";
-            email.style.display="none";
-            firstname.style.display="block";
-            lastname.style.display="block";
-        }
-        else if(i===2){
-            firstparagraph.innerHTML="Step 3 Of 3";
-            scndparagraph.innerHTML="Setting password";
-            firstname.style.display="none";
-            lastname.style.display="none";
-            password.style.display="block";
-            next.style.display="none";
-            submitbutton.style.display="block";
-        }
-        else if(i===3){
-            password.style.display="none";
-            code.style.display="block";
-
-
-        }
-
-    });
-
-
-
-
-    
-
-},2000)
-
-
-
+        content=(<>
+            {codeInput}
+        </>)
+    }
     return(
         <div className="form-parent">
                 <form>
@@ -109,29 +160,17 @@ submitbutton.addEventListener("click",(event)=>{
                         </div>
                         <h3>Sign In in to Cryptino</h3>
                         <div className="finish-percent">
-                            <div></div>
+                            <div style={{inlineSize:step*33+"%"}}></div>
                         </div>
                         <div className="back">
-                            <div className="back-svg">
-                                <svg data-encore-id="icon" role="img" aria-hidden="true" viewBox="0 0 24 24" className="Svg-sc-ytk21e-0 dDkLMK"><path d="M15.957 2.793a1 1 0 0 1 0 1.414L8.164 12l7.793 7.793a1 1 0 1 1-1.414 1.414L5.336 12l9.207-9.207a1 1 0 0 1 1.414 0z"></path></svg>
-                            </div>
-                            <div className="back-text">
-                                <p>Step 1 Of 3</p>
-                                <p>Setting Email</p>
-                            </div>
+                            {backHtml}
                         </div>
-                        <input type="text" name="email" placeholder="Enter your Email" required/>
-                        <input type="password" name="password" placeholder="Enter your password" required style={{display:"none"}}/>
-                        <div className="name" >
-                            <input type="text" placeholder="First Name" name="firstname" required style={{display:"none"}}/>
-                            <input type="text" placeholder="Last Name" name="lastname" required style={{display:"none"}}/>
-
-                       </div >
-                       <input type="text" placeholder="XXX-XXX" name="code"  style={{display:"none"}}/>
-
-                       <div className="next"></div>
-                       <input type="submit" value="Log In" style={{display:"none"}}/>
-
+                        {content}
+                        {step===3?submitInput:<div className="next" onClick={(e)=>{
+                            if(allowNext)
+                            setStep(step+1);
+                        else console.log("next dont allowed");
+                        }}>next</div>}
                         <div className="register">
                                 <span>already have an account?</span><a><span>Login In</span></a>
                         </div>

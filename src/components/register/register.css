@@ -76,3 +76,7 @@ input[name='code']{
     }
 
 }
+input.error{
+    border:0.09rem solid #ff0000;
+    outline: 0.09rem solid red;
+}

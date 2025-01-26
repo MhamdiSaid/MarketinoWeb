@@ -1,5 +1,4 @@
 import "./sellerdashboardheader.css";
-
 export default function  SellerDashBoardHeader(){
     return(
         <div className="SellerDashBoardHeader">

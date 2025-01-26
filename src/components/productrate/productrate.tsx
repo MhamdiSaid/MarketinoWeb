@@ -6,7 +6,7 @@ import productContext from "../productcontext.tsx";
 import useridContext from "../usercontext.tsx";
 
 import { useContext } from "react";
-
+//this function return true 
 let predicate=function(rating_target,rating){
     let userid=useContext(useridContext);
     if(rating_target <= rating && rating<(rating_target+1)){

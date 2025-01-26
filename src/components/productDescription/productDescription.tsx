@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import React,{ Fragment, useEffect, useState } from "react";
 import "./productDescription.css";
-import { useImmer } from "use-immer";
+import { useImmer,Updater } from "use-immer";
+ // Import the draft type directly
+import type {caracteristicsType,variantType,variantState,productType} from "../types";
+
 
 /** 
  *  ProductDescrirption component is responsible about display the product informations
@@ -12,40 +15,10 @@ import { useImmer } from "use-immer";
  * - the fixed caracteristics
  * - the total price
 */
-// the product object type :
 
-type caracteristicsType={type:string,value:string};
+type proxyVariant=(proxy:variantState[])=>void;
 
-// the variant object type
-type variantType={
-input_type:string ,
-section: string,
-valuespattern:string,
-variant_id:number 
-}
-// the variants state variable type:
-interface  variantState extends variantType  {value:string[]|string};
-// the product object type
-
-type productType={
-    caracteristics:caracteristicsType[],
-    contact_type:string,
-    description:string,
-    discount: number,
-    price: number,
-    productid: number,
-    productname: string,
-    reviews:object[],
-    scarcity: string,
-    shipping_cost: number,
-    stock_quantity: number,
-    stock_status: string,
-    storename: string,
-    sub_path:string,
-    variants:variantState[]
-};
-
-// atoast string :
+// a toast string will be used to print the result of an operation order/add to cart /add review...:
 
 let toast=`<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="display:block;position:relative;bottom:0rem;background-color: #08ff0a;">
 <div class="toast-header">
@@ -64,8 +37,11 @@ export default function ProductDescription({product}:{product:productType}){
        
         // this state variable will hold the variants that the client choosed to be used when sending
         // the order/add_to_cart request to the server
+
         let [variants,setVariants]=useImmer<variantState[]|null>(null);
+
         // set the quantity that the product want to 1 by default:
+
         const [quantity,setQuantity]=useState<number>(1);
 
         // if the variants varianle is not set yet then intialize it with the value
@@ -73,18 +49,18 @@ export default function ProductDescription({product}:{product:productType}){
         if(!variants){
 
             // update the state:
-            setVariants(product.variants.map((variant:variantState)=>{
+            setVariants(product.variants.map((variant:variantState):variantState=>{
 
                 // if the input type is a checkbox then assign the value property an array (multi selections)
                 if(variant.input_type==="checkbox"){
-                    return  {...variant,value:[]};
+                    return  {...variant,value:[] } as variantState;
                 }
                 return {...variant,value:""};
                
             }));
             // return do not continue rendering(executing the function);
             return;
-            //BUG
+          
         }
        
 
@@ -98,19 +74,34 @@ export default function ProductDescription({product}:{product:productType}){
             //create a form data object to construct a POST request body:
             let formdata=new FormData();
             //return if the varible is null:
-            if(!variants)return;
+            if(!variants){
+                console.error("variants is null");
+                return;
+            }
 
             //iterates over the variants,and for each specific variant append a key-value
             // pair to the variants propery of the  formdata (request body)::
             // key:the variant type 
             // value: the variant user value
-            variants.forEach((value)=>{
+            variants.forEach((variant:variantState)=>{
                 
-                formdata.append(`variants[${value["section"]}]`,value["value"]);
+                // checkbox value is an array!
+                if(typeof variant["value"] !== "string"){
+                    let values="";
+                    let length=variant["value"].length;
+                    for(let i=0;i<length;i++){
+                        values+=(i!==length-1)?variant["value"][i]+",":variant["value"][i];
+                    }
+                    formdata.append(`variants[${variant["section"]}]`,values);
+                }else{
+
+                formdata.append(`variants[${variant["section"]}]`,variant["value"]);
+
+                }
             });
             
             // apend the quantity of the product to order to the request body:
-            formdata.append("quantity","19");
+            formdata.append("quantity",quantity.toString());
             
 
             fetch(url,{
@@ -126,13 +117,19 @@ export default function ProductDescription({product}:{product:productType}){
                 // select The body element:
 
                 let body=document.querySelector(".toasts");
-                if(body==null)return;
+                if(body==null){
+                    console.error("body is null");
+                    return;
+                }
                 // construct a dom tree from a toast  string:
                 // we will use DOMParser API to parse the string into a DOM tree:
                 const parser=new DOMParser();
                 const doc=parser.parseFromString(toast,"text/html");
                 let toastElement:Element & {style:{backgroundColor:string}}|null=doc.querySelector(".toast");
-
+                if(toastElement==null){
+                    console.error("toastElement is null");
+                    return;
+                }
                 // add ability of removing the toast:
                 let closeButton=doc.querySelector("button");
                 closeButton?.addEventListener("click",(e)=>{
@@ -144,18 +141,22 @@ export default function ProductDescription({product}:{product:productType}){
                     // the order placed sucessufuly:
                     // change the toast message to assign to the user that the order is placed
                     // sucessfully
-                    if(toastElement==null)return;
+                  
                    let toastbody= toastElement.querySelector(".toast-body");
-                   if(toastbody==null)return;
+                   if(toastbody==null){
+                    console.error("toast body is null");
+                    return;
+                }
                    toastbody.innerHTML=isOrder?"the order placed sucessufuly ":"the order added to the cart";
-                    
                     body.append(toastElement);
 
                 }else{
                     // something wrong,data format maybe incorrect
-                    if(toastElement==null)return;
                     let toastbody:Element & {style:{color:string}}|null=toastElement.querySelector(".toast-body");
-                    if(toastbody==null)return;
+                    if(toastbody==null){
+                        console.error("toast body is null");
+                        return;
+                    }
                     toastbody.innerHTML="Something Wrong!check the entered inputs";
                     toastbody.style.color="white";
                     toastElement.style.backgroundColor="red";
@@ -164,7 +165,7 @@ export default function ProductDescription({product}:{product:productType}){
                 }
                 return res.json();
             }).then((json)=>{
-                // show the message for the curios clients
+                // show the message for the curious clients
                 console.log(json);
             });
     
@@ -189,16 +190,11 @@ export default function ProductDescription({product}:{product:productType}){
 
     // the endpoint for getting the product pictures:
     let images_path=`http://localhost:3001/images/stores/${"helloword"}/products/${product.productid}/`;
-
+     
     // the jsx to return:
     return(
-
-
         <div className="product-description">
             <div className="pictures">
-
-
-
             <div id="carouselExampleIndicators" className="carousel slide">
             <div className="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
@@ -207,7 +203,6 @@ export default function ProductDescription({product}:{product:productType}){
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
             </div>
-            
             <div className="carousel-inner">
             <div className="carousel-item active">
             <img src={images_path+"1.svg"} className="d-block w-100" alt="..."/>
@@ -254,8 +249,65 @@ export default function ProductDescription({product}:{product:productType}){
                     <p className="products-details-discount">${product.discount}</p>
                     </div>
                     <div className="variants-caracteristics">
-                    <div className="variants">
-                    {variants.map((variant,index)=>{
+                    <Variant variants={variants} setVariants={setVariants}/>
+                    <div className="caracteristics">
+                        <h6>Caracteristics</h6>
+                       {product.caracteristics.map((caracteristic:caracteristicsType,index:number)=>{
+                        return <p key={index}><span>{caracteristic.type} :</span> {caracteristic.value}</p>
+                       })}
+                        
+
+
+                    </div>
+
+
+                    </div>
+                    <div className="productdetails footer">
+                        <div className="total-price-quantity">
+                        <p className="total-count">{quantity*product.price}</p>
+                        <select onChange={(e)=>{
+                            setQuantity(parseInt(e.target.value));
+                        }}>
+                            {//bug here
+                            (new Array(20)).fill(1).map((elmt,index)=>{
+                                return <option key={index+1} value={index+1}>{index+1}</option>
+                            })}
+                        </select>
+                        </div>
+                        <div className="buttons">
+                            <div className="shop-now" onClick={(e)=>{
+                                handleShopNow(e,true);
+                            }}>
+                                <p>Shop Now</p>
+                            </div>
+                            <div className="add-to-cart" onClick={(e)=>{
+                                handleShopNow(e,false);
+                            }
+                            }>
+                                <p>Add TO Cart</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+
+        </div>
+    );
+}
+
+
+
+function Variant({variants,setVariants}:{variants:variantState[],setVariants:Updater<variantState[]|null>}){
+
+
+    return(
+        <>
+        
+        <div className="variants">
+                   
+                   
+                    {variants.map((variant:variantState,index:number)=>{
 
                        // check the input type of each variant and behaves depend on that:
 
@@ -267,23 +319,28 @@ export default function ProductDescription({product}:{product:productType}){
                             // and an OnChange event listener to update the value of the specific variant
                             // when the user change the value
                             return(
-                                <>
+                                <Fragment key={index}>
                                 <p className="variants-section">{variant.section}</p>
 
                                 <div className="mb-3 input-text">
                                 <input type="text" name={variant.section}
                                 value={variant.value}
                                 onChange={(e)=>{
-                                    
+                                    //update the variant value
                                     setVariants((proxy)=>{
-                                        if(proxy==null)return;
+                                        
+                                        if(proxy==null){
+                                            console.log("proxy is null");
+                                            return;
+                                        }
+
                                         proxy[index].value=e.target.value;
                                         
                                     });
                                 }}
                                 className="form-control" id="formGroupExampleInput" placeholder="you answer here"/>
                                 </div>
-                                </>
+                                </Fragment>
                             )
 
                         }else if(variant.input_type==="checkbox"){
@@ -309,9 +366,11 @@ export default function ProductDescription({product}:{product:productType}){
                                             setVariants((proxy)=>{
                                                 if(proxy==null)return;
                                                 if(e.target.checked){
-                                                proxy[index].value.push(e.target.value);
+                                                    if(typeof proxy[index].value==="string")return;
+                                                        proxy[index].value.push(e.target.value);
                                                 }else{
                                                     let indexx=proxy[index].value.indexOf(e.target.value);
+                                                    if(typeof proxy[index].value==="string")return;
                                                     if(index!==-1)
                                                         proxy[index].value.splice(indexx,1);
                                                 }
@@ -348,6 +407,10 @@ export default function ProductDescription({product}:{product:productType}){
                                             <input className="form-check-input" name={variant.section}  value={obj}
                                             onChange={(e)=>{
                                                 setVariants((proxy)=>{
+                                                    if(proxy===null){
+                                                        console.error("proxy is null");
+                                                        return;
+                                                    }
                                                     proxy[index].value=e.target.value;
                                                     
                                                 });
@@ -376,8 +439,11 @@ export default function ProductDescription({product}:{product:productType}){
 
                                     // if there's no selected file then just log a simple message
 
-
-                                    if(e.target.files.length==0){
+                                    if(!e.target.files){
+                                        console.log("error");
+                                        return;
+                                    }
+                                    if(  e.target.files.length==0){
                                             console.log("no file selected");
                                     }
                                     else{
@@ -387,7 +453,7 @@ export default function ProductDescription({product}:{product:productType}){
                                         let file=e.target.files[0];
 
                                         setVariants((proxy)=>{
-                                            proxy[index].value=file;
+                                           // proxy[index].value=file;
                                         });
                                     }
                                 }}      
@@ -404,6 +470,10 @@ export default function ProductDescription({product}:{product:productType}){
                             let regexArray=variant.valuespattern.split("|");
                             if(variant.value===""){
                                 setVariants((proxy)=>{
+                                    if(proxy===null){
+                                        console.log("proxy is null");
+                                        return;
+                                    }
                                     proxy[index].value=regexArray[0];
                                 });
                             }
@@ -416,6 +486,10 @@ export default function ProductDescription({product}:{product:productType}){
                                     value={variant.value==""?regexArray[0]:variant.value}
                                     onChange={(e)=>{
                                         setVariants((proxy)=>{
+                                            if(proxy===null){
+                                                console.log("proxy is null");
+                                                return;
+                                            }
                                             proxy[index].value=e.target.value;
                                         });
                                     }}
@@ -435,61 +509,9 @@ export default function ProductDescription({product}:{product:productType}){
                         }
                     })}
                    
-
-
-                  
-
-
-                    
-
-
-
-                    
-
-
                     
                     </div>
-                    <div className="caracteristics">
-                        <h6>Caracteristics</h6>
-                       {product.caracteristics.map((caracteristic:caracteristicsType)=>{
-                        return <p><span>{caracteristic.type} :</span> {caracteristic.value}</p>
-                       })}
-                        
-
-
-                    </div>
-
-
-                    </div>
-                    <div className="productdetails footer">
-                        <div className="total-price-quantity">
-                        <p className="total-count">{quantity*product.price}</p>
-                        <select onChange={(e)=>{
-                            setQuantity(parseInt(e.target.value));
-                        }}>
-                            {(new Array(20)).fill(1).map((elmt,index)=>{
-                                return <option key={index+1} value={index+1}>{index+1}</option>
-                            })}
-                        </select>
-                        </div>
-                        <div className="buttons">
-                            <div className="shop-now" onClick={(e)=>{
-                                handleShopNow(e,true);
-                            }}>
-                                <p>Shop Now</p>
-                            </div>
-                            <div className="add-to-cart" onClick={(e)=>{
-                                handleShopNow(e,false);
-                            }
-                            }>
-                                <p>Add TO Cart</p>
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                </div>
-
-        </div>
-    );
+        </>
+    )
 }
+export {Variant};

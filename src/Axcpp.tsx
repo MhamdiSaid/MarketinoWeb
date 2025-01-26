@@ -9,15 +9,45 @@ import Reviews from "./components/reviews/reviews";
 import productContext from "./components/productcontext";
 import userContext from "./components/usercontext";
 import { useImmer } from "use-immer";
-import Orders from "./components/Orders/orders";
-import Home from "./components/home/home";
 function App() {
-   
+    const [product,setProduct]=useImmer<any>(null);
+    // make the quantity that the user want is 1 by defaut 
+  
+    useEffect(()=>{
+      
+      console.log("hey");
+
+      fetch("http://localhost:3001/stores/helloword/products/abdedrahimczaddssddcccssax",
+        {
+          headers:{
+            "Authorization":"Bearer cea02094ade92909e0920d91d59e16ffa1ed675d581275fe56250d4830c9ed5910fab49d1cccc99329e53ae1559595fff7c23370e9580c7f59587853"
+          }
+        }
+      ).then(res=>{
+        return res.json();
+      }).then(json=>{
+        console.log(json.reviews);
+        console.log("=++++++++++++++++++++");
+        setProduct(json);
+        
+        
+      })
+    },[]);
 
   return (
   
 <>
-      <Home/>
+<Header/>
+      <SellerDashBoardHeader />
+      <userContext.Provider value={3} >
+      <productContext.Provider value={product && product.productid} >
+      {product && <ProductDescription product={product}/>}
+      
+      {product && <ProductRate reviews={[...product.reviews]} setProduct={setProduct}/>}
+
+      {product && <Reviews product={product}/>}
+     </productContext.Provider>
+     </userContext.Provider>
      </>
   
   )

@@ -4,16 +4,20 @@ import SearchBar  from "../searchbar/searchbar.tsx";
 import "./header.css"
 import ReactDOM from "react-dom/client";
 import Orders from "../Orders/orders.tsx";
+import {useState} from "react";
 export default function Header(){
-
+    const [showOrdersComponent,setShowOrders]=useState(false);
+    
 
     function showOrders(e:object,isOrder:boolean){
-        document.body.style.overflow = "hidden";
+      
         let root_div=document.querySelector(".fixedpos");
         if(root_div!==null){
-
+            setShowOrders(true);
             let root =ReactDOM.createRoot(root_div);
-            root.render(<Orders/>);
+            root.render(<Orders setShowOrders={setShowOrders} />);
+            
+            
         }else{
             console.log("error root ==null");
         }
@@ -33,6 +37,7 @@ export default function Header(){
                     
                     <p onClick={
                         (e)=>{
+                            if(!showOrdersComponent)
                             showOrders(e,false);
                         }
                     }>Orders</p>
