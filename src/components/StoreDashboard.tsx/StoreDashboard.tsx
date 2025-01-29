@@ -3,15 +3,21 @@ import { useEffect,useState } from "react";
 
 export default  function StoreDashboard(){
 
-        const [stores,setStores]=useState();
+        const [stores,setStores]=useState([]);
 
 
         useEffect(()=>{
 
-            fetch("http://localhost:3001/stores/me").then(((res)=>{
+            fetch("http://localhost:3001/stores/me",{
+                headers:{
+                    "Authorization":"Bearer cea02094ade92909e0920d91d59e16ffa1ed675d581275fe56250d4830c9ed5910fab49d1cccc99329e53ae1559595fff7c23370e9580c7f59587853"
+
+                }
+            }).then(((res)=>{
                 return res.json();
-            })).then(json=>setStores(JSON.parse(json)));
-        });
+            })).then(json=>setStores(json));
+        },[]);
+        console.log(stores);
     let handleDeleteStore=(e)=>{
 
         const item = e.target.closest('tr, .divide-y');
@@ -59,8 +65,8 @@ export default  function StoreDashboard(){
                                 {stores.map((store,index)=>{
                                     return (
                                         <tr className="hover:bg-indigo-50 transition-colors group">
-                                            <td className="px-6 py-4 font-medium text-indigo-900">Fashion Haven</td>
-                                            <td className="px-6 py-4 text-indigo-600">Style Your Perfect Look</td>
+                                            <td className="px-6 py-4 font-medium text-indigo-900">{store.name}</td>
+                                            <td className="px-6 py-4 text-indigo-600">{store.slogan}</td>
                                             <td className="px-6 py-4 text-right space-x-3">
                                                 <button className="text-blue-500 hover:text-blue-700 transition-colors">
                                                     <i className="fas fa-eye"></i>
@@ -80,12 +86,13 @@ export default  function StoreDashboard(){
 
                         
                         <div className="md:hidden divide-y divide-indigo-100">
-                           
+                        {stores.map((store,index)=>{
+                            return(
                             <div className="p-4 hover:bg-indigo-50 transition-colors group">
                                 <div className="flex justify-between items-start mb-2">
                                     <div>
-                                        <h3 className="font-medium text-indigo-900">Fashion Haven</h3>
-                                        <p className="text-sm text-indigo-600">Style Your Perfect Look</p>
+                                        <h3 className="font-medium text-indigo-900">{store.name}</h3>
+                                        <p className="text-sm text-indigo-600">{store.slogan}</p>
                                     </div>
                                     <div className="flex space-x-3">
                                         <button className="text-blue-500 hover:text-blue-700">
@@ -100,7 +107,7 @@ export default  function StoreDashboard(){
                                     </div>
                                 </div>
                             </div>
-                          
+                                )})}
                         </div>
                     </div>
                 </div>
