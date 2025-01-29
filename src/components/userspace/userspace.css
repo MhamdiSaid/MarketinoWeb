@@ -1,0 +1,10 @@
+.offcanvaoption{
+    height:2rem;
+    margin:none;
+    background-color: #45a3db;
+    display: flex;
+    
+}
+.offcanvaoption>*{
+    margin-left:0.9rem;
+}

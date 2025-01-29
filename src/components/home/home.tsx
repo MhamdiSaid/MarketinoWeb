@@ -16,17 +16,24 @@ export default function Home(){
       */
     const [submitStatus,SetSubmitStatus]= useState("unsubmitted");
     function handleSubmit(e){
-        if(submitStatus==="valid"){
-            SetSubmitStatus("submitted");
-        }else {
-            return;}
+       
 
         let dataform=new FormData();
+        console.log("mmm")
         for(let property in inputs){
             if(property==="cover"){
+                for(let i=0;i<3;i++){
+                    if(inputs.cover[i][1]===false){
+                        console.log("error")
+                        return;
+                    }
+                }
                 inputs.cover.map((file,index)=>dataform.append(`cover`,file[0]));
 
             }else{
+                if(inputs[property][1]===false){
+                    console.log("error");
+                    return;}
                 dataform.append(property,inputs[property][0]);
             }
         }
@@ -45,6 +52,7 @@ export default function Home(){
             return res.json();
         }).then(json=>console.log(json));
         
+        
     }
     return(
         <>
@@ -53,14 +61,15 @@ export default function Home(){
                     <label htmlFor="validationServerUsername" className="form-label">Store Name</label>
                     <div className="input-group has-validation">
                     <span className="input-group-text" id="inputGroupPrepend3">@</span>
-                    <input type="text" className={"form-control "+(inputs.name[1]?"is-valid":"is-invalid")} id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required
+                    <input type="text" className={"form-control "+((inputs.name[1] && submitStatus!=="conflict")?"is-valid":"is-invalid")} id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required
                     value={inputs.name[0]} onChange={(e)=>{
+                        if(submitStatus=="conflict")SetSubmitStatus("unsubmitted");
                         let value=e.target.value;
                         setInputs({...inputs,name:[value,value.match(/^[a-zA-Z][a-zA-Z-_0-9]*$/)!==null]});
                     }}
                     />
                     <div id="validationServerUsernameFeedback" className="invalid-feedback">
-                        Please choose a correct store.
+                        {submitStatus==="conflict"?"name already exist":"Please choose a correct store name."}
                     </div>
                     <div className="valid-feedback">
                     Looks good!
@@ -252,6 +261,8 @@ export default function Home(){
                         handleSubmit(e);
                     }}
                     >Submit form</button>
+                  
+                    
                 </div>
                 </form>
         </>
